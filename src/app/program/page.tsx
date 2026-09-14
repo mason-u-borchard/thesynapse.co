@@ -260,8 +260,9 @@ export default function ProgramPage() {
               same treatment as the home and /about heroes. -mb-2 pulls it
               toward the headline so it reads as the headline's context
               rather than a caption for the flower. */}
-          <p className="-mb-2 font-mono text-[clamp(0.875rem,0.4vw+0.65rem,1.125rem)] tracking-[0.04em] text-off-black/80">
-            San Diego, CA &middot; <span className="whitespace-nowrap">{meta.dates.display}</span>
+          <p className="-mb-2 font-mono text-[clamp(1rem,0.5vw+0.75rem,1.25rem)] font-medium uppercase tracking-[0.2em] text-amethyst-200">
+            <span className="whitespace-nowrap">San Diego, CA &middot;</span>{" "}
+            <span className="whitespace-nowrap">{meta.dates.display}</span>
           </p>
           {/* Figma 445:2245 splits the headline so the italic phrase sits
               on its own line. The <br /> keeps "a living laboratory"

@@ -1,3 +1,4 @@
+// _Last updated: 2026-09-14_
 "use client";
 
 import { useMemo, useState, type FormEvent } from "react";
@@ -170,7 +171,7 @@ export function ApplicationForm() {
         <h2 className="font-serif text-3xl text-ink">Thanks for applying.</h2>
         <p className="mt-4 max-w-prose text-pretty text-muted-foreground mx-auto">
           The committee reads every application carefully. You'll hear back
-          within two weeks. A confirmation email is on its way.
+          by December 31, 2026. A confirmation email is on its way.
         </p>
         <p className="mt-5 font-mono text-xs text-muted-foreground">
           Confirmation: {status.confirmationId}

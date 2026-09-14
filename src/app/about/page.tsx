@@ -53,8 +53,9 @@ export default function AboutPage() {
         <div className="container-gutter relative z-10 flex flex-col py-24 md:py-32">
           <div className="max-w-[55ch]">
             {/* Conference dates above the disciplines eyebrow (2026-09-14),
-                matching the home hero. */}
-            <p className="mb-2 font-mono text-base tracking-[0.04em] text-off-black">
+                matching the home hero: uppercase, wide tracking, one step
+                larger, in amethyst-200 for contrast on the off-white hero. */}
+            <p className="mb-3 font-mono text-lg font-medium uppercase tracking-[0.2em] text-amethyst-200">
               {meta.dates.display}
             </p>
             <p className="font-mono text-base tracking-[0.04em] text-off-black">

@@ -1,7 +1,8 @@
-// _Last updated: 2026-08-12_
+// _Last updated: 2026-09-14_
 import type { Metadata } from "next";
 import Link from "next/link";
 import { DisciplineCard } from "@/components/discipline-card";
+import { meta } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: { absolute: "Program | The Synapse — San Diego · May 3-6, 2027" },
@@ -46,7 +47,7 @@ type Day = {
 
 const days: Day[] = [
   {
-    date: "May 4",
+    date: "May 4, 2027",
     number: 1,
     title: "Day 1: Expand",
     subtitle: "Who shapes minds? And what becomes possible when that expands?",
@@ -83,7 +84,7 @@ const days: Day[] = [
     ],
   },
   {
-    date: "May 5",
+    date: "May 5, 2027",
     number: 2,
     title: "Day 2: Weave",
     subtitle: "Something is gestating where these fields cross — and we are its parents.",
@@ -163,7 +164,7 @@ const days: Day[] = [
     ],
   },
   {
-    date: "May 6",
+    date: "May 6, 2027",
     number: 3,
     title: "Day 3: Emerge",
     subtitle: "What is being born, and how will we wear the mantle of care?",
@@ -255,6 +256,13 @@ export default function ProgramPage() {
             height={111}
             className="h-[90px] w-auto md:h-[111px]"
           />
+          {/* Conference dates as a mono eyebrow under the flower (2026-09-14),
+              same treatment as the home and /about heroes. -mb-2 pulls it
+              toward the headline so it reads as the headline's context
+              rather than a caption for the flower. */}
+          <p className="-mb-2 font-mono text-[clamp(0.875rem,0.4vw+0.65rem,1.125rem)] tracking-[0.04em] text-off-black/80">
+            San Diego, CA &middot; <span className="whitespace-nowrap">{meta.dates.display}</span>
+          </p>
           {/* Figma 445:2245 splits the headline so the italic phrase sits
               on its own line. The <br /> keeps "a living laboratory"
               intact rather than breaking mid-phrase. */}

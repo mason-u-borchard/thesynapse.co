@@ -1,5 +1,7 @@
+// _Last updated: 2026-09-14_
 import type { Metadata } from "next";
 import Link from "next/link";
+import { meta } from "@/lib/content";
 import { FlaskConical, HandHeart, Atom, Flame, Sparkles } from "lucide-react";
 import { OrganizingTeam } from "@/components/organizing-team";
 import { OrganizingCommittee } from "@/components/organizing-committee";
@@ -50,6 +52,11 @@ export default function AboutPage() {
       <section className="relative">
         <div className="container-gutter relative z-10 flex flex-col py-24 md:py-32">
           <div className="max-w-[55ch]">
+            {/* Conference dates above the disciplines eyebrow (2026-09-14),
+                matching the home hero. */}
+            <p className="mb-2 font-mono text-base tracking-[0.04em] text-off-black">
+              {meta.dates.display}
+            </p>
             <p className="font-mono text-base tracking-[0.04em] text-off-black">
               AI &middot; Robotics &middot; Cognitive Science &middot; Consciousness
             </p>

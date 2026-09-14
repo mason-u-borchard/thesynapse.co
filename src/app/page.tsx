@@ -118,6 +118,12 @@ export default function HomePage() {
                 07-01 audit: with the deadline now in the hero, the
                 disciplines read better as eyebrow context for the
                 headline instead of a trailing tag beneath the subhead. */}
+            {/* Conference dates above the disciplines eyebrow (2026-09-14),
+                same type treatment so it reads as event context rather
+                than competing with the orange deadline date below. */}
+            <p className="mb-2 font-mono text-[clamp(0.875rem,0.4vw+0.65rem,1.125rem)] tracking-[0.04em] text-off-white/85">
+              {meta.dates.display}
+            </p>
             <p className="font-mono text-[clamp(0.875rem,0.4vw+0.65rem,1.125rem)] tracking-[0.04em] text-off-white/85">
               AI &middot; Robotics &middot; Cognitive Science &middot; Consciousness
             </p>

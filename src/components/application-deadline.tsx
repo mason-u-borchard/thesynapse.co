@@ -153,15 +153,20 @@ export function ApplicationDeadline({
 
   return (
     <div
-      className={`group relative inline-flex items-stretch gap-5 overflow-hidden rounded-2xl border py-3.5 pl-6 pr-7 transition-[border-color,transform] duration-500 ease-out-expo hover:-translate-y-0.5 ${t.root} ${t.hover}`}
+      className={`group relative inline-flex max-w-full items-stretch gap-4 overflow-hidden rounded-2xl border py-3.5 pl-5 pr-5 transition-[border-color,transform] duration-500 ease-out-expo hover:-translate-y-0.5 sm:gap-5 sm:pl-6 sm:pr-7 ${t.root} ${t.hover}`}
     >
       {/* Warm accent spine -- the one hit of color that pulls the eye. */}
+      {/* Narrow phones (2026-09-14): the October 15 label is longer than
+          the old July 31 one and wrapped to two lines at 390px, so below
+          sm the padding and gaps tighten and the date scales down. The
+          date only holds one line from 360px up; under that it wraps
+          rather than pushing the plate past the gutter. */}
       <span
         aria-hidden
         className={`absolute inset-y-0 left-0 w-1 bg-gradient-to-b ${t.spine}`}
       />
 
-      <div className="flex items-center gap-3.5">
+      <div className="flex items-center gap-3 sm:gap-3.5">
         {dot}
         <div className="leading-none">
           <p
@@ -170,7 +175,7 @@ export function ApplicationDeadline({
             {open ? "Applications close" : "Applications closed"}
           </p>
           <p
-            className={`mt-1.5 font-serif text-2xl tracking-tight tabular-nums ${t.date}`}
+            className={`mt-1.5 font-serif text-[clamp(1.125rem,4vw+0.25rem,1.5rem)] tracking-tight tabular-nums min-[360px]:whitespace-nowrap ${t.date}`}
           >
             {CLOSE_LABEL}
           </p>
@@ -181,7 +186,7 @@ export function ApplicationDeadline({
           hydration flash. This large tabular numeral is the memorable beat. */}
       {days !== null && (
         <div
-          className={`flex animate-fade-up items-center border-l pl-5 ${t.divider}`}
+          className={`flex animate-fade-up items-center border-l pl-4 sm:pl-5 ${t.divider}`}
         >
           <div className="text-center leading-none">
             <p
@@ -190,7 +195,7 @@ export function ApplicationDeadline({
               {days > 0 ? days : days === 0 ? "0" : "—"}
             </p>
             <p
-              className={`mt-1.5 font-mono text-[0.58rem] uppercase tracking-[0.18em] ${t.caption}`}
+              className={`mt-1.5 whitespace-nowrap font-mono text-[0.58rem] uppercase tracking-[0.18em] ${t.caption}`}
             >
               {days > 1
                 ? "days left"

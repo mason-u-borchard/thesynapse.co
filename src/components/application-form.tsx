@@ -359,7 +359,7 @@ export function ApplicationForm() {
               from the prior presenter flow, reworded for "contribution."
               Not in Kelly's draft -- flagged for committee confirmation. */}
           <Field
-            label="Contributor slots are limited. If we can't fit your contribution into the program for 2026, would you still like to attend as a participant?"
+            label="Contributor slots are limited. If we can't fit your contribution into the program for 2027, would you still like to attend as a participant?"
             required
           >
             <YesNoRadios

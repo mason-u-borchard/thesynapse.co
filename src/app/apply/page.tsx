@@ -1,6 +1,8 @@
-// _Last updated: 2026-08-12_
+// _Last updated: 2026-09-14_
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ApplicationForm } from "@/components/application-form";
+import { ApplicationDeadline } from "@/components/application-deadline";
 
 export const metadata: Metadata = {
   title: "Apply",
@@ -16,9 +18,7 @@ export default function ApplyPage() {
           Apply to attend
         </h1>
         <div className="mt-6">
-          <p className="max-w-prose rounded-lg border border-oxide-200/40 bg-oxide-100/10 px-5 py-4 text-lg leading-relaxed text-ink">
-            Applications are closed for now. If you&apos;ve already applied, your application still stands -- there&apos;s nothing more you need to do.
-          </p>
+          <ApplicationDeadline />
         </div>
       </header>
 
@@ -51,7 +51,9 @@ export default function ApplyPage() {
         </p>
       </section>
 
-      {/* Application form disabled 2026-08-12 -- applications are closed for now. */}
+      <section aria-label="Application form" className="mt-10 max-w-2xl">
+        <ApplicationForm />
+      </section>
 
       <footer className="mt-16 max-w-2xl">
         <div className="flex flex-wrap gap-3">

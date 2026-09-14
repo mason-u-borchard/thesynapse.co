@@ -1,8 +1,9 @@
-// _Last updated: 2026-08-12_
+// _Last updated: 2026-09-14_
 import Link from "next/link";
 import { meta } from "@/lib/content";
 import { HeroTicker } from "@/components/hero-ticker";
 import { DisciplineCard } from "@/components/discipline-card";
+import { ApplicationDeadline } from "@/components/application-deadline";
 
 // Home title + description come from the layout's default metadata
 // (Kelly's 2026-05-26 SEO copy) so there's a single source of truth.
@@ -138,7 +139,11 @@ export default function HomePage() {
                 and the CTAs -- the date anchored in Fraunces plus a live
                 day-count that carries the urgency. onDark tone: a glass
                 chip tuned for the deep-amethyst hero. */}
-            {/* Application deadline plate removed 2026-08-12 -- applications closed. */}
+            {/* Removed 2026-08-12 when applications closed; restored
+                2026-09-14 when they reopened through October 15. */}
+            <div className="mt-7">
+              <ApplicationDeadline tone="onDark" variant="minimal" />
+            </div>
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <Link
                 href="/invest"

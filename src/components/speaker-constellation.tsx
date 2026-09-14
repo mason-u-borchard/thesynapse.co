@@ -564,7 +564,7 @@ export function SpeakerConstellation({
 
         {/* Footnote inside the canvas frame. */}
         <p className="pointer-events-none absolute bottom-4 left-4 right-4 font-sans text-xs text-off-black/55">
-          Filled dots are 2026 speakers. Hollow rings are scholars. Lines connect each node to the fields its research touches.
+          Filled dots are 2027 speakers. Hollow rings are scholars. Lines connect each node to the fields its research touches.
         </p>
       </div>
 
@@ -592,7 +592,7 @@ export function SpeakerConstellation({
                 className="inline-block h-3.5 w-3.5 rounded-full ring-1 ring-off-black/15"
                 style={{ background: "hsl(140 38% 38%)" }}
               />
-              2026 speaker (placeholder roster)
+              2027 speaker (placeholder roster)
             </li>
             <li className="flex items-center gap-2">
               <span

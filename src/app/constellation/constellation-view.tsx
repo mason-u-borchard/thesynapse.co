@@ -24,7 +24,7 @@ export function ConstellationView() {
             Each dot is a speaker. Each line is one of the four fields their research touches. Speakers whose work sits across two or three fields settle between them.
           </p>
           <p className="text-pretty">
-            Filled dots are 2026 speakers (placeholders until the roster confirms). Hollow rings are scholars whose published work bridges the four fields.
+            Filled dots are 2027 speakers (placeholders until the roster confirms). Hollow rings are scholars whose published work bridges the four fields.
           </p>
           <p className="text-pretty">
             The layout isn&rsquo;t drawn by hand. It&rsquo;s a force simulation &mdash; springs pulling speakers toward the fields they belong to, repulsion keeping them legible. Where they come to rest is where the conversation actually lives.

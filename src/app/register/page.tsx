@@ -1,4 +1,4 @@
-// _Last updated: 2026-09-14_
+// _Last updated: 2026-09-15_
 import type { Metadata } from "next";
 import Link from "next/link";
 import { KeepInLoopForm } from "@/components/keep-in-loop-form";
@@ -63,7 +63,7 @@ export default function RegisterPage() {
           San Diego in May 2027. Most places are invitation-based; a
           small number open through this application window. Take your
           time -- we read every submission carefully and will be in
-          touch by December 31, 2026.
+          touch by December 1, 2026.
         </p>
       </header>
       <section aria-labelledby="application-heading" className="mt-12 max-w-2xl">

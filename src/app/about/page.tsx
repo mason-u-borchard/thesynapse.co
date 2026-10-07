@@ -1,4 +1,4 @@
-// _Last updated: 2026-09-14_
+// _Last updated: 2026-10-07_
 import type { Metadata } from "next";
 import Link from "next/link";
 import { meta } from "@/lib/content";
@@ -103,8 +103,8 @@ export default function AboutPage() {
           sweeps behind the card across both this section and the
           hero above.
 
-          Layout note: on desktop the moon sets the section's intrinsic
-          height and the card is absolutely centered over it. On mobile
+          Layout note: on lg+ the moon sets the section's intrinsic
+          height and the card is absolutely centered over it. Below lg
           the moon, scaled to viewport width, isn't tall enough to
           contain the card -- the card was overflowing into the moss
           section below and Julia's signature got clipped. So on mobile
@@ -116,19 +116,20 @@ export default function AboutPage() {
           {/* Full-bleed moon. Acts as an absolutely-pinned backdrop on
               mobile (so the card -- in normal flow -- can define the
               section's height) and resumes its intrinsic-height role
-              on md+ where the absolute card sits on top of it. */}
+              on lg+ where the absolute card sits on top of it. */}
           <img
             src="/figma/moon.png"
             alt=""
             aria-hidden="true"
-            className="absolute inset-0 h-full w-full select-none object-cover md:relative md:block md:h-auto md:object-fill"
+            className="absolute inset-0 h-full w-full select-none object-cover lg:relative lg:block lg:h-auto lg:object-fill"
           />
           {/* Dedication card. On mobile it's in normal flow with
               breathing room above/below so the moon shows through and
-              the next section can't overlap. On md+ it returns to the
-              absolutely-centered overlay layout. z-10 so it sits above
+              the next section can't overlap. On lg+ it returns to the
+              absolutely-centered overlay layout (at md the longer
+              dedication copy no longer fits inside the moon). z-10 so it sits above
               the page squiggle. */}
-          <div className="relative z-10 flex items-center justify-center px-gutter py-16 md:absolute md:inset-0 md:py-0">
+          <div className="relative z-10 flex items-center justify-center px-gutter py-16 lg:absolute lg:inset-0 lg:py-0">
             <DedicationCard />
           </div>
         </div>
@@ -142,14 +143,11 @@ export default function AboutPage() {
         <div className="container-gutter grid items-center gap-16 lg:grid-cols-[minmax(0,494px)_minmax(0,1fr)]">
           <div className="text-off-white">
             <h2 className="font-serif text-[clamp(2.25rem,4vw+0.5rem,3rem)] leading-[1.2]">
-              For those who are building beyond the blueprint.
+              For those willing to embrace bold newness and shift the future toward love.
             </h2>
             <div className="mt-6 space-y-5 font-sans text-xl leading-[1.4]">
               <p>
-                This room is for the women who are working where the disciplines don't have names yet — and for those committed enough to stand with them. Researchers and builders. Scholars and practitioners. Academics and executives.
-              </p>
-              <p>
-                The common thread isn't a credential. It's a disposition: the desire to build over the comfort of what already exists.
+                This year is just the beginning, and it's intentionally small at the event, with a large extended ecosystem. By curating 100 women and men leading this frontier, The Synapse is weaving unconditional love into our future with a conference that is not like anything that has existed before. AI, consciousness, cognitive science, and robotics are the fields shaping the future of humanity, and while they're not separate, they are siloed – though the power of the sacred feminine belongs to all of us, regardless of gender.
               </p>
             </div>
             <div className="mt-10 flex flex-wrap items-center gap-3">
@@ -368,7 +366,7 @@ function DedicationCard() {
         </h2>
         <div className="mt-7 space-y-5 font-sans text-[clamp(0.95rem,0.5vw+0.6rem,1.0625rem)] leading-[1.6] text-off-black">
           <p>
-            AI, consciousness, cognitive science, and robotics are the fields shaping the future of humanity. They remain overwhelmingly led by elite, male-ordered institutions. After the Epstein files made plain how actively women have been suppressed in these disciplines, a small group of us decided to stop waiting for a better invitation and build one.
+            The shaping of minds has always required feminine wisdom, and now that AI, consciousness, cognitive science, and robotics are the fields shaping the future of humanity, this is even more clear. After the Epstein files made plain how actively women have been suppressed in these disciplines, a small community decided to stop waiting for a better invitation and build an ecosystem that supports the sacred feminine and unconditional love in all of us and in the fields shaping our future.
           </p>
           <p>
             <strong className="font-semibold">The Synapse is a dedication</strong> to the rigorous, controversial, embodied, relational work women are already doing, and to the collaborative future we intend to build together.

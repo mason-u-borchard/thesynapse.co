@@ -1,9 +1,8 @@
-// _Last updated: 2026-09-14_
+// _Last updated: 2026-10-18_
 import type { Metadata } from "next";
 import Link from "next/link";
 import { FlaskConical, Building2, Atom, Flame, Sparkles } from "lucide-react";
 import { DisciplineCard } from "@/components/discipline-card";
-import { ApplicationDeadline } from "@/components/application-deadline";
 
 export const metadata: Metadata = {
   title: { absolute: "Attend The Synapse | San Diego · May 3–6, 2027" },
@@ -51,20 +50,19 @@ export default function AttendPage() {
                 This is a small gathering by design. A limited number of places are open to those who support a high-trust, high-contribution environment &mdash; people working in disciplines that don&apos;t have names yet, and those committed to stand with them: researchers and builders, scholars and practitioners, academics and executives.
               </p>
             </div>
-            {/* Deadline plate with a live day-count right above the CTA.
-                Removed 2026-08-12 when applications closed; restored
-                2026-09-14 when they reopened through October 15. onLight
-                tone: a warm chip tuned for the off-white hero. */}
+            {/* Deadline plate and Apply CTA removed 2026-10-18 --
+                applications closed October 15. Same treatment as the
+                2026-08-12 close. */}
             <div className="mt-8">
-              <ApplicationDeadline tone="onLight" />
-            </div>
-            <div className="mt-8">
-              <Link
-                href="/apply"
-                className="inline-flex h-[50px] items-center btn-solid-glow rounded-full bg-oxide-100 px-6 font-noto text-lg font-semibold text-off-black transition-transform hover:-translate-y-0.5"
+              <span
+                aria-disabled="true"
+                className="inline-flex h-[50px] cursor-not-allowed items-center rounded-full bg-off-black/10 px-6 font-noto text-lg font-semibold text-off-black/50"
               >
-                Apply now
-              </Link>
+                Applications closed
+              </span>
+              <p className="mt-4 max-w-[591px] font-sans text-base leading-[1.5] text-off-black/70">
+                Every applicant hears back by December 1, 2026.
+              </p>
             </div>
           </div>
           {/* When & Where photo card (Figma 238:1616). Landscape card
@@ -183,12 +181,12 @@ export default function AttendPage() {
             AI, robotics, cognitive science, and consciousness are being developed in silos. The questions that matter most live between them.
           </h2>
           <div className="mt-10">
-            <Link
-              href="/apply"
-              className="inline-flex h-[50px] items-center btn-solid-glow rounded-full bg-oxide-100 px-6 font-noto text-lg font-semibold text-off-black transition-transform hover:-translate-y-0.5"
+            <span
+              aria-disabled="true"
+              className="inline-flex h-[50px] cursor-not-allowed items-center rounded-full bg-off-black/10 px-6 font-noto text-lg font-semibold text-off-black/50"
             >
-              Apply now
-            </Link>
+              Applications closed
+            </span>
           </div>
           <div className="mt-16 grid w-full max-w-[1488px] grid-cols-1 gap-3 min-[440px]:grid-cols-2 min-[440px]:gap-4 lg:grid-cols-4 lg:gap-6">
             <DisciplineCard

@@ -1,4 +1,4 @@
-// _Last updated: 2026-09-15_
+// _Last updated: 2026-10-18_
 import fs from "node:fs";
 import path from "node:path";
 import { faq, meta, schedule, sponsors } from "@/lib/content";
@@ -123,7 +123,7 @@ export function assembleConciergePrompt(provider: "anthropic" | "openai" | "none
     ``,
     `What you CAN say:`,
     `- Approximately ${meta.capacity} participants will convene in San Diego across the three days.`,
-    `- Most places are invitation-based; a limited number open through the application window, which is open through October 15, 2026. After it closes, the team reviews the full pool together and tells every applicant yes or no by December 1, 2026. People who have already applied stay in the pool and do not need to reapply.`,
+    `- Most places are invitation-based; the application window closed on October 15, 2026. The team is reviewing the full pool together and will tell every applicant yes or no by December 1, 2026. If someone has already applied, there is nothing more they need to do.`,
     `- Who leads a session, facilitates, performs, or contributes in other ways is being shaped by the committee as the program arc is designed; those assignments are not yet public.`,
     `- Session leaders, facilitators, and performers are compensated -- "the ethos of equality starts with what we value enough to fund."`,
     `- If someone wants to propose leading a session or workshop, they should mention it in their application; the committee follows up.`,

@@ -1,8 +1,6 @@
-// _Last updated: 2026-09-14_
+// _Last updated: 2026-10-18_
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ApplicationForm } from "@/components/application-form";
-import { ApplicationDeadline } from "@/components/application-deadline";
 
 export const metadata: Metadata = {
   title: "Apply",
@@ -18,7 +16,9 @@ export default function ApplyPage() {
           Apply to attend
         </h1>
         <div className="mt-6">
-          <ApplicationDeadline />
+          <p className="max-w-prose rounded-lg border border-oxide-200/40 bg-oxide-100/10 px-5 py-4 text-lg leading-relaxed text-ink">
+            Applications closed on October 15, 2026. The team is reviewing the full pool together and will let every applicant know yes or no by December 1, 2026. If you&apos;ve already applied, there&apos;s nothing more you need to do.
+          </p>
         </div>
       </header>
 
@@ -51,9 +51,7 @@ export default function ApplyPage() {
         </p>
       </section>
 
-      <section aria-label="Application form" className="mt-10 max-w-2xl">
-        <ApplicationForm />
-      </section>
+      {/* Application form removed 2026-10-18 -- applications closed October 15. */}
 
       <footer className="mt-16 max-w-2xl">
         <div className="flex flex-wrap gap-3">

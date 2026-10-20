@@ -1,11 +1,13 @@
 # The Synapse -- Conference Prototype
 
+_Last updated: 2026-10-19_
+
 > Where women connect mind, machine, and what comes next.
 
-The web home for The Synapse 2026, a women-led gathering at the intersection of AI, robotics, cognitive science, and consciousness. The site lives at `thesynapse.co` (v2) with the original v1 design archived at `legacy.thesynapse.co` for side-by-side comparison.
+The web home for The Synapse 2027, a women-led gathering at the intersection of AI, robotics, cognitive science, and consciousness. The site lives at `thesynapse.co` (v2) with the original v1 design archived at `legacy.thesynapse.co` for side-by-side comparison.
 
-- **When:** October 9-11, 2026
-- **Where:** Atlanta, GA -- venue TBD
+- **When:** May 3-6, 2027
+- **Where:** San Diego, CA -- venue TBD
 - **Capacity:** 75 participants by invitation
 - **Fiscal sponsor:** Applied Love Labs (ALL). Charitable contributions flow through ALL, which issues tax-deductible receipts in its own name.
 
@@ -61,7 +63,7 @@ The `src/content/*.json` files are the single source of truth for meta, speakers
 | Route          | What it is                                                      |
 |----------------|-----------------------------------------------------------------|
 | `/`            | Homepage -- hero, four disciplines, organizing team, invest pitch, program arc. |
-| `/about`       | Field-statement intro, dedication card on the moon, organizing team carousel, why Atlanta. |
+| `/about`       | Field-statement intro, dedication card on the moon, organizing team carousel, why women. |
 | `/ethos`       | The nine guiding principles.                                    |
 | `/attend`      | Invitation, audience list, Notify Me email capture, four discipline cards. |
 | `/invest`      | Sponsor tiers, fund-the-room pitch.                             |

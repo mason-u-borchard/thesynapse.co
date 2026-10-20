@@ -1,73 +1,169 @@
 import Link from "next/link";
 import { meta } from "@/lib/content";
-import { SynapseMark } from "@/components/synapse-mark";
+
+// Footer per Taylor's Figma (Home node 19:1222 / Footer 17:16934).
+// Two visually distinct stacked sections:
+//   - Pre-Footer: a full-bleed cityscape photo with the Synapse "S"
+//     mark overlay, "San Diego, CA / May 3-6, 2027" headline, and a
+//     "Hosted by Applied Love Labs" badge. Image src is still the
+//     Atlanta skyline placeholder pending Taylor's San Diego asset.
+//   - Main Footer: dark moss-400 surface with logo + tagline + the
+//     standard three-column nav (Explore / Get Involved / Reach Us)
+//     and a thin top-bordered bar at the very bottom for copyright
+//     and legal links.
 
 export function SiteFooter() {
   const year = new Date().getFullYear();
   return (
-    <footer className="border-t border-border bg-surface-raised">
-      <div className="container-gutter grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
-        <div className="max-w-sm">
-          <Link href="/" className="flex items-center gap-2.5" aria-label="The Synapse -- home">
-            <SynapseMark className="h-6 w-6 text-ink" />
-            <span className="font-serif text-lg">The Synapse</span>
-          </Link>
-          <p className="mt-4 text-sm text-muted-foreground">
-            {meta.subtitle} {meta.city} &middot; {meta.dates.display}. An
-            initiative of{" "}
-            <a
-              href={meta.fiscalSponsor.href}
-              target="_blank"
-              rel="noreferrer"
-              className="underline decoration-gold-deep decoration-2 underline-offset-4 link-glow"
-            >
-              {meta.fiscalSponsor.name}
-            </a>.
-          </p>
-        </div>
-        <FooterColumn title="Explore" items={[
-          { label: "About", href: "/about" },
-          { label: "Ethos", href: "/#ethos" },
-          { label: "Program", href: "/schedule" },
-          { label: "FAQ", href: "/faq" },
-        ]} />
-        <FooterColumn title="Get involved" items={[
-          { label: "Apply to Participate", href: "/register" },
-          { label: "Fund the work", href: "/donate" },
-        ]} />
-        <FooterColumn title="Reach us" items={[
-          { label: "hello@thesynapse.co", href: "mailto:hello@thesynapse.co" },
-          { label: "Press kit", href: "/about#press" },
-        ]} />
-      </div>
-      <div className="border-t border-border">
-        <div className="container-gutter flex flex-col gap-3 py-6 text-xs text-muted-foreground md:flex-row md:items-center md:justify-between">
-          <span>
-            &copy; {year} {meta.fiscalSponsor.name}.
-          </span>
-          <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-            <Link href="/privacy" className="hover:text-ink">Privacy Policy</Link>
-            <span aria-hidden="true">&middot;</span>
-            <Link href="/terms" className="hover:text-ink">Terms of Service</Link>
-            <span aria-hidden="true" className="hidden md:inline">&middot;</span>
-            <span className="font-mono tracking-wider">
-              {meta.dates.display} &middot; {meta.city}
+    <footer className="relative isolate bg-moss-400 text-off-white">
+      {/* === Pre-Footer: cityscape with date overlay ===
+          The cityscape image fills the section. The Synapse "S" mark
+          (a stylized white wordmark glyph) sits to the right at large
+          scale as decorative anchoring. Date headline + host badge
+          sit on the left. */}
+      <section
+        aria-label="San Diego, May 3-6, 2027"
+        className="relative overflow-hidden"
+      >
+        <div className="relative h-[560px] md:h-[760px] lg:h-[933px]">
+          <img
+            src="/figma/san-diego-skyline.jpg"
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+          {/* Bottom gradient fades the photo into the dark footer below
+              for a smooth handoff. */}
+          <div
+            className="absolute inset-x-0 bottom-0 h-1/3 pointer-events-none"
+            style={{ background: "linear-gradient(to bottom, rgba(4,16,17,0) 0%, hsl(var(--moss-400)) 100%)" }}
+            aria-hidden="true"
+          />
+          {/* Off-white Synapse Icon mark per Figma 498:119, sized to
+              match the 409px/933px (~44%) proportion from Figma
+              72:1781 and anchored to the right of the date headline. */}
+          <img
+            src="/figma/synapse-icon-off-white.svg"
+            alt=""
+            aria-hidden="true"
+            className="absolute right-[8%] bottom-[18%] z-[1] hidden h-[44%] w-auto md:block"
+          />
+          <div className="container-gutter relative z-10 flex h-full flex-col justify-end pb-20 md:pb-32">
+            <h2 className="max-w-[438px] font-serif text-[clamp(2.5rem,5vw+0.5rem,3.625rem)] font-semibold leading-[1.2] text-off-white">
+              San Diego, CA<br />May 3-6, 2027
+            </h2>
+            <span className="mt-7 inline-flex w-fit rounded bg-off-black/40 px-3 py-1.5 font-mono text-base text-off-white">
+              Hosted by Applied Love Labs
             </span>
           </div>
         </div>
-      </div>
+      </section>
+
+      {/* === Main Footer ===
+          Logo + tagline on the left, three-column nav on the right. */}
+      {/* Layout: stack the wordmark/tagline + nav vertically below lg.
+          The earlier md:flex-row + md:grid-cols-3 packed three nav
+          columns next to the tagline column in the 768-1023 range and
+          squeezed the email + "Fund the room" / "Apply to attend"
+          labels until they wrapped or trailed off the viewport
+          (Mason 06-04 audit). At lg+ the original side-by-side layout
+          returns. */}
+      <section aria-label="Site footer" className="relative pt-24 md:pt-36">
+        <div className="container-gutter flex flex-col gap-16 xl:flex-row xl:items-start xl:justify-between xl:gap-24">
+          {/* Wordmark column: Figma 17:16879 sets the tagline column to
+              a fixed 300px so it wraps after "mind,". The disciplines
+              line then sits below as whitespace-nowrap -- it visually
+              breaks the column's nominal width but that's intentional
+              in the design. */}
+          <div className="w-full max-w-[420px] xl:w-[300px] xl:max-w-none">
+            <Link href="/" className="inline-flex items-center" aria-label="The Synapse -- home">
+              <img
+                src="/figma/synapse-wordmark.svg"
+                alt="The Synapse"
+                className="h-[42px] w-auto"
+              />
+            </Link>
+            <p className="mt-7 font-sans text-xl leading-[1.6] text-off-white">
+              Where women connect mind, machine and what comes next
+            </p>
+            <p className="mt-7 font-mono text-sm font-light leading-[1.4] text-off-white whitespace-nowrap">
+              AI &middot; Robotics &middot; Cognitive Science &middot; Consciousness
+            </p>
+          </div>
+
+          {/* Column gap from Figma 17:16895 is 120px; below xl the
+              wordmark column stacks above so 3 cols still need to
+              breathe -- keep a generous gap-12/gap-10 there and
+              promote to 120px at xl. */}
+          <div className="grid gap-12 sm:grid-cols-3 sm:gap-10 xl:gap-[120px]">
+            <FooterColumn
+              title="Explore"
+              items={[
+                { label: "About", href: "/about" },
+                { label: "Ethos", href: "/ethos" },
+                { label: "Program", href: "/program" },
+                { label: "FAQ", href: "/faq" },
+              ]}
+            />
+            <FooterColumn
+              title="Get Involved"
+              items={[
+                { label: "Fund the room", href: "/invest" },
+                { label: "Apply to attend", href: "/attend" },
+              ]}
+            />
+            <FooterColumn
+              title="Reach Us"
+              items={[
+                { label: "hello@thesynapse.co", href: "mailto:hello@thesynapse.co" },
+              ]}
+            />
+          </div>
+        </div>
+
+        {/* Bottom bar: thin top divider with copyright and legal links. */}
+        <div className="mt-32 border-t border-off-white/20">
+          <div className="container-gutter flex flex-col gap-3 py-8 font-mono text-base text-off-white md:flex-row md:items-center md:justify-between">
+            <span>&copy; {year} {meta.fiscalSponsor.name}</span>
+            <div className="flex items-center gap-2">
+              <Link href="/privacy" className="hover:underline">Privacy Policy</Link>
+              <span aria-hidden="true">&middot;</span>
+              <Link href="/terms" className="hover:underline">Terms of Service</Link>
+            </div>
+          </div>
+        </div>
+      </section>
     </footer>
   );
 }
 
-function FooterColumn({ title, items }: { title: string; items: { label: string; href: string }[] }) {
+function FooterColumn({
+  title,
+  items,
+}: {
+  title: string;
+  items: { label: string; href?: string; chip?: string }[];
+}) {
   return (
     <div>
-      <h2 className="eyebrow mb-3">{title}</h2>
-      <ul className="space-y-2 text-sm">
+      {/* Eyebrow: JetBrains Mono Light @ 14px, tracking 0.4em, never
+          wraps (Figma 17:16897/16904/16909). nowrap keeps "GET INVOLVED"
+          intact even when the grid column is narrow at narrower xl
+          viewports. */}
+      <h3 className="font-mono text-sm font-light uppercase leading-[1.4] tracking-[0.4em] whitespace-nowrap text-off-white">{title}</h3>
+      <ul className="mt-[30px] space-y-5 font-sans text-base text-off-white">
         {items.map((item) => (
-          <li key={item.href}>
-            <Link href={item.href} className="text-muted-foreground hover:text-ink">{item.label}</Link>
+          <li key={item.label} className="flex items-center gap-2">
+            {item.href ? (
+              <Link href={item.href} className="hover:underline">{item.label}</Link>
+            ) : (
+              <span aria-disabled="true" className="text-off-white/65 cursor-default">{item.label}</span>
+            )}
+            {item.chip && (
+              <span className="rounded bg-off-white/5 px-1.5 py-0.5 font-mono text-[11px] italic text-off-white/85">
+                {item.chip}
+              </span>
+            )}
           </li>
         ))}
       </ul>

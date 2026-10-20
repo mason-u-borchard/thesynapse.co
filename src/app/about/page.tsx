@@ -1,130 +1,394 @@
+// _Last updated: 2026-10-07_
 import type { Metadata } from "next";
+import Link from "next/link";
 import { meta } from "@/lib/content";
-import { WhoItsFor } from "@/components/who-its-for";
+import { FlaskConical, HandHeart, Atom, Flame, Sparkles } from "lucide-react";
+import { OrganizingTeam } from "@/components/organizing-team";
+import { OrganizingCommittee } from "@/components/organizing-committee";
 
 export const metadata: Metadata = {
-  title: "About",
-  description: "Four fields, one frontier. The Synapse convenes women working across AI, robotics, cognitive science, and consciousness -- hosted by Applied Love Labs.",
+  title: { absolute: "About The Synapse | A New Kind of Futures Gathering" },
+  description:
+    "The Synapse convenes women across AI, robotics, neuroscience, cognitive science, and consciousness to shape what comes next.",
 };
+
+const fieldStatements = [
+  "Artificial Intelligence: What does AI become capable of when the room that builds it changes?",
+  "Robotics: What do we choose to build into the things that act on our behalf?",
+  "Cognitive science: What opens when more than one way of knowing sets the terms?",
+  "Consciousness: What becomes available when we treat the hardest question as the starting point?",
+];
+
+// Audience list per IA copy + Figma 20:2251 icon set. Icon glyphs
+// are chosen to mirror the oxide-tinted ones in Taylor's design:
+// flask for researchers, hand-heart for institutional bridge-builders,
+// atom for early-career scholars, flame for fuelers, sparkles for
+// artists.
+const audience = [
+  { label: "Leaders in research, industry, and movements shaping what gets built", Icon: FlaskConical },
+  { label: "Academics and executives who see across the lines their institutions draw", Icon: HandHeart },
+  { label: "Early-career scholars with fresh visions seeking mentorship and collaboration", Icon: Atom },
+  { label: "Allies, funders, and partners fueling the mission", Icon: Flame },
+  { label: "Artists and practitioners holding what research can't yet name", Icon: Sparkles },
+];
 
 export default function AboutPage() {
   return (
-    <div className="container-gutter py-section">
-      <header className="max-w-3xl">
-        <p className="eyebrow mb-4">About</p>
-        <h1 className="text-display-lg text-balance">Four fields. One frontier.</h1>
-        <div className="mt-6 max-w-prose space-y-5 text-lg leading-relaxed text-muted-foreground text-pretty">
+    <>
+      {/* Hero + moon-dedication share a common off-white background and
+          a single page-spanning flowing-text squiggle that weaves from
+          the upper-right down through both sections. The squiggle is a
+          tall absolutely-positioned SVG; it lives behind the hero text
+          (z-10) and dedication card (z-10) but in front of the moon
+          image so the orange ticker reads across the moon's surface,
+          matching Taylor's Figma. */}
+      <div className="relative isolate overflow-hidden bg-off-white -mt-[88px] pt-[88px]">
+        <FlowingSquiggle />
+      {/* === Hero (Figma 18:612) ===
+          Eyebrow + 4-line "spaces between" headline, field statements
+          separated by hairlines, closing paragraph, two CTAs. The moon
+          image with the dedication card overlay follows in the next
+          section. */}
+      <section className="relative">
+        <div className="container-gutter relative z-10 flex flex-col py-24 md:py-32">
+          <div className="max-w-[55ch]">
+            {/* Conference dates above the disciplines eyebrow (2026-09-14),
+                matching the home hero: uppercase, wide tracking, one step
+                larger, in amethyst-200 for contrast on the off-white hero. */}
+            <p className="mb-3 font-mono text-lg font-medium uppercase tracking-[0.2em] text-amethyst-200">
+              {meta.dates.display}
+            </p>
+            <p className="font-mono text-base tracking-[0.04em] text-off-black">
+              AI &middot; Robotics &middot; Cognitive Science &middot; Consciousness
+            </p>
+            <h1 className="mt-5 font-serif text-[clamp(2.5rem,5vw+0.5rem,3.75rem)] leading-[1.05] text-off-black text-balance">
+              The questions that matter live in the spaces{" "}
+              <span className="italic">between.</span>
+            </h1>
+          </div>
+          <div className="mt-12 max-w-[60ch] divide-y divide-off-black/15">
+            {fieldStatements.map((line) => (
+              <p
+                key={line}
+                className="font-sans text-xl leading-[1.4] text-off-black py-5 first:pt-0 last:pb-0"
+              >
+                {line}
+              </p>
+            ))}
+          </div>
+          <p className="mt-10 max-w-[60ch] font-sans text-xl leading-[1.4] text-off-black">
+            These four fields are not separate conversations. They are one conversation that hasn't happened yet. The Synapse is where it begins.
+          </p>
+          <div className="mt-10 flex flex-wrap items-center gap-3">
+            <Link
+              href="/invest"
+              className="inline-flex h-[50px] items-center btn-solid-glow rounded-full bg-oxide-100 px-6 font-noto text-lg font-semibold text-off-black transition-transform hover:-translate-y-0.5"
+            >
+              Fund the room
+            </Link>
+            <Link
+              href="/attend"
+              className="inline-flex h-[50px] items-center btn-outline-glow rounded-full border border-off-black/80 px-6 font-noto text-lg font-semibold text-off-black/80 transition-colors hover:bg-off-black/5"
+            >
+              Apply to attend
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* === Moon + Dedication card (Figma 39:1335) ===
+          The moon photograph is now FULL-BLEED across the section,
+          serving as a textured backdrop. The dedication card floats
+          centered on top of the moon. The page-level squiggle still
+          sweeps behind the card across both this section and the
+          hero above.
+
+          Layout note: on lg+ the moon sets the section's intrinsic
+          height and the card is absolutely centered over it. Below lg
+          the moon, scaled to viewport width, isn't tall enough to
+          contain the card -- the card was overflowing into the moss
+          section below and Julia's signature got clipped. So on mobile
+          we flow the card normally inside the section and pin the moon
+          absolutely as a backdrop, letting the card define section
+          height. */}
+      <section className="relative pb-12 md:pb-section">
+        <div className="relative">
+          {/* Full-bleed moon. Acts as an absolutely-pinned backdrop on
+              mobile (so the card -- in normal flow -- can define the
+              section's height) and resumes its intrinsic-height role
+              on lg+ where the absolute card sits on top of it. */}
+          <img
+            src="/figma/moon.png"
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 h-full w-full select-none object-cover lg:relative lg:block lg:h-auto lg:object-fill"
+          />
+          {/* Dedication card. On mobile it's in normal flow with
+              breathing room above/below so the moon shows through and
+              the next section can't overlap. On lg+ it returns to the
+              absolutely-centered overlay layout (at md the longer
+              dedication copy no longer fits inside the moon). z-10 so it sits above
+              the page squiggle. */}
+          <div className="relative z-10 flex items-center justify-center px-gutter py-16 lg:absolute lg:inset-0 lg:py-0">
+            <DedicationCard />
+          </div>
+        </div>
+      </section>
+      </div>
+
+      {/* === For the women / Who belongs here (Figma 18:649) ===
+          Dark moss-300 surface with a 2-column layout: pitch + CTAs on
+          the left, a moss-400 audience-list panel on the right. */}
+      <section className="relative isolate bg-moss-300 px-gutter py-24 md:py-section">
+        <div className="container-gutter grid items-center gap-16 lg:grid-cols-[minmax(0,494px)_minmax(0,1fr)]">
+          <div className="text-off-white">
+            <h2 className="font-serif text-[clamp(2.25rem,4vw+0.5rem,3rem)] leading-[1.2]">
+              For those willing to embrace bold newness and shift the future toward love.
+            </h2>
+            <div className="mt-6 space-y-5 font-sans text-xl leading-[1.4]">
+              <p>
+                This year is just the beginning, and it's intentionally small at the event, with a large extended ecosystem. By curating 100 women and men leading this frontier, The Synapse is weaving unconditional love into our future with a conference that is not like anything that has existed before. AI, consciousness, cognitive science, and robotics are the fields shaping the future of humanity, and while they're not separate, they are siloed – though the power of the sacred feminine belongs to all of us, regardless of gender.
+              </p>
+            </div>
+            <div className="mt-10 flex flex-wrap items-center gap-3">
+              <Link
+                href="/invest"
+                className="inline-flex h-[50px] items-center btn-solid-glow rounded-full bg-oxide-100 px-6 font-noto text-lg font-semibold text-off-black transition-transform hover:-translate-y-0.5"
+              >
+                Fund the room
+              </Link>
+              <Link
+                href="/attend"
+                className="inline-flex h-[50px] items-center btn-outline-glow rounded-full border border-off-white/80 px-6 font-noto text-lg font-semibold text-off-white transition-colors hover:bg-off-white/10"
+              >
+                Apply to attend
+              </Link>
+            </div>
+          </div>
+          <div>
+            <p className="font-mono text-sm uppercase tracking-[0.2em] text-off-white/70">
+              Who belongs here
+            </p>
+            <ul className="mt-5 space-y-3">
+              {audience.map(({ label, Icon }) => (
+                <li
+                  key={label}
+                  className="flex items-center gap-5 rounded-2xl bg-moss-400 px-6 py-5"
+                >
+                  <Icon
+                    size={22}
+                    strokeWidth={1.5}
+                    aria-hidden="true"
+                    className="shrink-0 text-oxide-100"
+                  />
+                  <span className="font-sans text-lg leading-[1.35] text-off-white">{label}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* === Organizing team (Figma 20:2285, refreshed 2026-06-15) ===
+          Taylor's redesigned section: heading + intro + CTAs at top,
+          two stacked horizontal bio cards (Julia, Beth -- Elatia
+          stepped off 2026-06-03), then a horizontal divider, then a
+          14-row committee table with LinkedIn-linked names. */}
+      <section className="relative isolate overflow-hidden bg-moss-300 px-gutter pb-24 md:pb-section">
+        <div className="container-gutter flex flex-col items-center text-off-white">
+          <div className="flex flex-col items-center gap-6 text-center">
+            <h2 className="font-serif text-[clamp(2.25rem,4vw+0.5rem,3rem)] leading-[1.2]">
+              The organizing team
+            </h2>
+            <p className="max-w-[680px] font-sans text-[clamp(1rem,0.4vw+0.75rem,1.25rem)] leading-[1.4] text-off-white">
+              The Synapse is also shaped by an organizing committee of researchers, builders, and practitioners from across the four fields.
+            </p>
+            <div className="mt-2 flex flex-wrap items-center justify-center gap-3">
+              <Link
+                href="/invest"
+                className="inline-flex h-[50px] items-center btn-solid-glow rounded-full bg-oxide-100 px-6 font-noto text-lg font-semibold text-off-black transition-transform hover:-translate-y-0.5"
+              >
+                Fund the room
+              </Link>
+              <Link
+                href="/attend"
+                className="inline-flex h-[50px] items-center btn-outline-glow rounded-full border border-off-white/80 px-6 font-noto text-lg font-semibold text-off-white transition-colors hover:bg-off-white/10"
+              >
+                Apply to attend
+              </Link>
+            </div>
+          </div>
+          <OrganizingTeam />
+          <div className="mt-16 h-px w-full max-w-[1040px] bg-off-white/15" aria-hidden="true" />
+          <div className="mt-16 flex w-full justify-center">
+            <OrganizingCommittee />
+          </div>
+        </div>
+      </section>
+
+      {/* "Why Women?" section -- replaces the prior "Why Atlanta?" block
+          (pulled 2026-06-04). Same centered, off-white treatment Taylor
+          drew in Figma 20:2573: four-petal ornament, serif headline, body
+          column, single outlined CTA. Copy comes from Julia + Beth's
+          06-04 message to the committee; the body runs long, so the
+          column max-width is widened modestly and paragraphs are spaced
+          with leading. */}
+      <section id="why-women" className="relative isolate overflow-hidden bg-off-white py-24 md:py-section scroll-mt-24">
+        <div className="container-gutter flex flex-col items-center text-center">
+          <img
+            src="/figma/atlanta-ornament.svg"
+            alt=""
+            aria-hidden="true"
+            width={144}
+            height={144}
+            className="h-[120px] w-[120px] md:h-[144px] md:w-[144px]"
+          />
+          <h2 className="mt-6 font-serif text-[clamp(2.5rem,4vw+0.5rem,3rem)] leading-[1.2] text-off-black">
+            Why Women?
+          </h2>
+          <div className="mt-6 max-w-[760px] space-y-6 text-left font-sans text-xl leading-[1.6] text-off-black">
+            <p>
+              This conference started because of a complaint. Women started noticing that the Epstein files contained instance after instance — across the fields of consciousness, robotics, cognitive science, and AI — of academics flirting with Jeffrey Epstein using the lever of denigrating women to secure funding and access power.
+            </p>
+            <p>
+              This is an old tactic: leveraging misogyny to get in a powerful man's good graces.
+            </p>
+            <p>
+              In this context, Dr. Julia Mossbridge, the inspiration for this conference, couldn't help but ask the question: what would these fields be like if women were celebrated and platformed rather than denigrated and silenced? Would we be decades ahead of where we are now? Would our technology be more compassionate and human-friendly?
+            </p>
+            <p>
+              This conference was born from an insidious context, but it is hand- and heart-made with love and hope. It platforms the power of women, and even more importantly, of anyone aligned with the power of the sacred feminine.
+            </p>
+            <p>
+              This sacred feminine already knows how to shape minds. It already knows how to give birth and to raise children responsibly. It knows that we are in a relationship of interdependence, and that we can and should make decisions from that ground of reciprocity.
+            </p>
+            <p>
+              This conference grows within and out of the sacred feminine. We are birthing something new from the interdependence of these four fields. While we don't know what this combined field will look like, we believe it will be human-first, compassionate, forward-thinking, and inclusive.
+            </p>
+            <p>
+              The Synapse is designed to birth that field and parent it, responsibly. To support humanity's quest for more compassion: for ourselves, for each other, for the planet. To shape, with care, the minds and the fledgling technologies now coming into being.
+            </p>
+          </div>
+          <div className="mt-12">
+            <Link
+              href="/attend"
+              className="inline-flex h-[50px] items-center btn-outline-glow rounded-full border border-off-black/80 px-6 font-noto text-lg font-semibold text-off-black/80 transition-colors hover:bg-off-black/5"
+            >
+              Apply to attend
+            </Link>
+          </div>
+        </div>
+      </section>
+
+    </>
+  );
+}
+
+// Page-spanning dotted squiggle per Figma 39:1335. A gentle S-curve
+// runs down the right side of the hero + moon-dedication sections,
+// rendered as a string of small dots (stroke-dasharray) with the
+// same Fraunces italic ticker text flowing alongside it on a parallel
+// offset path. SMIL animates startOffset to keep the text in motion.
+// Hidden below md where the right-column space disappears.
+function FlowingSquiggle() {
+  const tickerText =
+    "This is not a conference about the future; This is the future, in formation. · ";
+  // Single gentle S-bend down the right side of the page. The text
+  // path is offset 36px LEFT of the dot path so the italic text reads
+  // alongside the dots rather than on top of them.
+  const dotPath =
+    "M 1430,40 C 1430,360 1180,520 1180,840 C 1180,1160 1430,1320 1430,1640 C 1430,1960 1240,2150 1080,2440";
+  const textPath =
+    "M 1394,40 C 1394,360 1144,520 1144,840 C 1144,1160 1394,1320 1394,1640 C 1394,1960 1204,2150 1044,2440";
+  return (
+    <svg
+      viewBox="0 0 1500 2500"
+      preserveAspectRatio="xMidYMid slice"
+      className="pointer-events-none absolute inset-0 z-[1] hidden h-full w-full text-oxide-200 md:block"
+      aria-hidden="true"
+    >
+      <defs>
+        <path id="about-squiggle-dots" d={dotPath} fill="none" />
+        <path id="about-squiggle-text" d={textPath} fill="none" />
+      </defs>
+      {/* The dotted line itself: zero-width dashes spaced ~18px apart
+          render as a chain of small circles when paired with a round
+          stroke-linecap. */}
+      <use
+        href="#about-squiggle-dots"
+        stroke="currentColor"
+        strokeWidth="5"
+        strokeLinecap="round"
+        strokeDasharray="0,18"
+        fill="none"
+      />
+      {/* Ticker text running along the parallel offset path. */}
+      <text
+        fill="currentColor"
+        style={{
+          fontFamily: "var(--font-fraunces), serif",
+          fontSize: "22px",
+          fontStyle: "italic",
+          letterSpacing: "0.04em",
+        }}
+      >
+        <textPath href="#about-squiggle-text" startOffset="0%">
+          {tickerText.repeat(8)}
+          <animate
+            attributeName="startOffset"
+            from="0%"
+            to="-12.5%"
+            dur="80s"
+            repeatCount="indefinite"
+          />
+        </textPath>
+      </text>
+    </svg>
+  );
+}
+
+// Dedication card. The flowing-text squiggle that wraps around the
+// card is rendered at the page level (FlowingSquiggle) so it can
+// span both the hero and the moon-dedication section.
+function DedicationCard() {
+  return (
+    <div className="relative mx-auto w-full max-w-[630px]">
+      {/* The card itself */}
+      <article
+        className="relative rounded-[40px] bg-off-white p-8 md:p-12"
+        style={{
+          boxShadow:
+            "8px 8px 24px 0 rgba(0,0,0,0.18), inset -8px -8px 16px 0 rgba(0,0,0,0.04)",
+        }}
+      >
+        <h2 className="font-serif text-[clamp(1.75rem,2.5vw+0.5rem,2.5rem)] leading-[1.15] text-off-black">
+          This is a dedication
+        </h2>
+        <div className="mt-7 space-y-5 font-sans text-[clamp(0.95rem,0.5vw+0.6rem,1.0625rem)] leading-[1.6] text-off-black">
           <p>
-            AI, robotics, cognitive science, and consciousness are no
-            longer separate conversations. The questions that matter now
-            live between them -- across disciplines, ways of knowing, and
-            the full range of human intelligence.
+            The shaping of minds has always required feminine wisdom, and now that AI, consciousness, cognitive science, and robotics are the fields shaping the future of humanity, this is even more clear. After the Epstein files made plain how actively women have been suppressed in these disciplines, a small community decided to stop waiting for a better invitation and build an ecosystem that supports the sacred feminine and unconditional love in all of us and in the fields shaping our future.
           </p>
           <p>
-            The Synapse convenes women working at these edges --
-            researchers, builders, practitioners, and leaders shaping what
-            comes next in real time.
-          </p>
-          <p className="font-serif italic text-ink">
-            This is not a conference about the future.<br />
-            It is the future, in formation.
+            <strong className="font-semibold">The Synapse is a dedication</strong> to the rigorous, controversial, embodied, relational work women are already doing, and to the collaborative future we intend to build together.
           </p>
         </div>
-      </header>
-
-      <section id="who" className="mt-20">
-        <p className="eyebrow mb-4 text-muted-foreground">Who it's for</p>
-        <h2 className="text-display-md">For the women building at the edges.</h2>
         <div className="mt-8">
-          <WhoItsFor />
-        </div>
-      </section>
-
-      <section id="founder" className="mt-20 paper p-8 md:p-10">
-        <p className="eyebrow mb-4 text-muted-foreground">A dedication, not a protest</p>
-        <div className="max-w-prose space-y-5 text-pretty text-ink">
-          <p>
-            AI, consciousness, cognitive science, and robotics are the
-            fields shaping the future of humanity. And they remain
-            overwhelmingly led by elite, male-ordered institutions.
-            After the Epstein files release made plain how women have
-            been actively suppressed in these disciplines, a small group
-            of us decided we would stop waiting for a better invitation
-            and build one.
-          </p>
-          <p>
-            This conference is not a protest. It is a dedication: to the
-            rigorous, controversial, embodied, relational work women are
-            already doing, and to the collaborative future we intend to
-            build together.
-          </p>
-        </div>
-        <p className="mt-6 text-sm text-muted-foreground">
-          -- {meta.founder.name} &middot; {meta.founder.title}
-        </p>
-      </section>
-
-      <section id="fiscal-sponsor" className="mt-12 paper p-8">
-        <p className="eyebrow mb-4 text-muted-foreground">Host and fiscal sponsor</p>
-        <h2 className="font-serif text-3xl tracking-tight">{meta.fiscalSponsor.name}</h2>
-        <p className="mt-4 max-w-prose text-pretty text-muted-foreground">{meta.fiscalSponsor.blurb}</p>
-        <div className="mt-6">
-          <a
-            href={meta.fiscalSponsor.href}
-            target="_blank"
-            rel="noreferrer"
-            className="btn btn-ghost"
+          <p
+            className="text-[clamp(2.5rem,3vw+1rem,3.5rem)] leading-none text-off-black"
+            style={{ fontFamily: "var(--font-style-script), cursive" }}
           >
-            About {meta.fiscalSponsor.short}
-          </a>
+            Julia
+          </p>
+          <p className="mt-3 font-sans italic text-[clamp(0.875rem,0.4vw+0.5rem,1rem)] text-off-black/85">
+            Julia Mossbridge, PhD
+            <br aria-hidden="true" />
+            Founder, Applied Love Labs
+          </p>
         </div>
-      </section>
-
-      <section id="atlanta" className="mt-12 paper p-8">
-        <p className="eyebrow mb-4 text-muted-foreground">Why Atlanta</p>
-        <h2 className="font-serif text-3xl tracking-tight">A city already doing the work of empowering women.</h2>
-        <p className="mt-4 max-w-prose text-pretty text-muted-foreground">
-          We are gathering in Atlanta: a city with deep roots in civil
-          rights, a thriving tech and research ecosystem, and an
-          established commitment to lifting women's voices. The City of
-          Atlanta has expressed interest in supporting the initiative.
-        </p>
-      </section>
-
-      {/* #PLACEHOLDER */}
-      {/* <section id="committee" className="mt-20">
-        <h2 className="text-display-md">Organizing committee</h2>
-        <p className="mt-4 max-w-prose text-muted-foreground text-pretty">
-          The working committee stewards the program, access, ethics, and
-          community design. Committee roster is a placeholder until the
-          committee confirms names for public listing.
-        </p>
-        <ul className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {committee.map((m) => (
-            <li key={m.role} className="paper p-6">
-              <p className="eyebrow mb-2 text-muted-foreground">{m.role}</p>
-              <p className="font-serif text-xl text-ink">{m.name}</p>
-              <p className="mt-1 text-sm text-muted-foreground">{m.affiliation}</p>
-              <p className="mt-4 text-sm text-ink">{m.focus}</p>
-            </li>
-          ))}
-        </ul>
-      </section> */}
-
-      {/* #PLACEHOLDER -- Partners section hidden until confirmed partners exist */}
-
-      {/* #PLACEHOLDER -- Code of conduct / code of ethics section hidden per Beth 2026-04-23 */}
-
-      <section id="press" className="mt-24 max-w-3xl">
-        <h2 className="text-display-md">Press and inquiries</h2>
-        <p className="mt-4 text-pretty text-muted-foreground">
-          For media passes, speaker interviews, or the official press kit,
-          reach the organizing committee at{" "}
-          <a href="mailto:hello@thesynapse.co" className="text-ink underline decoration-gold-deep decoration-2 underline-offset-4 link-glow">
-            hello@thesynapse.co
-          </a>.
-        </p>
-      </section>
+      </article>
     </div>
   );
 }
+
+// (BioCard component removed -- replaced by the interactive
+// <OrganizingTeam> client component in src/components/.)

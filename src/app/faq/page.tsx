@@ -4,38 +4,69 @@ import { FaqAccordion } from "@/components/faq-accordion";
 
 export const metadata: Metadata = {
   title: "FAQ",
-  description: "Answers to the questions we receive most often, updated as the conference approaches.",
+  description:
+    "Answers to the questions we receive most often, updated as the conference approaches.",
 };
 
+// Category ordering follows the IA (ATTEND / INVEST / TRAVEL / ACCESSIBILITY / PROGRAM).
+const CATEGORIES = ["attend", "invest", "travel", "accessibility", "program"] as const;
+
 export default function FaqPage() {
-  const grouped = {
-    registration: faq.filter((f) => f.category === "registration"),
-    submissions: faq.filter((f) => f.category === "submissions"),
+  const grouped: Record<(typeof CATEGORIES)[number], typeof faq> = {
+    attend: faq.filter((f) => f.category === "attend"),
+    invest: faq.filter((f) => f.category === "invest"),
     travel: faq.filter((f) => f.category === "travel"),
-    access: faq.filter((f) => f.category === "access"),
-    conduct: faq.filter((f) => f.category === "conduct"),
+    accessibility: faq.filter((f) => f.category === "accessibility"),
     program: faq.filter((f) => f.category === "program"),
   };
+
   return (
-    <div className="container-gutter py-section">
-      <header className="max-w-3xl">
-        <p className="eyebrow mb-4">FAQ</p>
-        <h1 className="text-display-lg text-balance">The short answers.</h1>
-        <p className="mt-6 max-w-prose text-lg leading-relaxed text-muted-foreground text-pretty">
-          If your question is not here, ask Ava in the bottom-right corner --
-          she has read every page on this site -- or email us directly.
-        </p>
-      </header>
-      <div className="mt-14 space-y-14">
-        {Object.entries(grouped).map(([key, rows]) =>
-          rows.length === 0 ? null : (
-            <section key={key} id={key}>
-              <h2 className="font-serif text-2xl capitalize text-ink">{key}</h2>
-              <FaqAccordion items={rows} />
-            </section>
-          ),
-        )}
-      </div>
+    // Off-white surface across the whole page per Taylor's 06-08
+    // R1 audit ("Page should be white"). Sits beneath the sticky
+    // header via the standard -mt-[88px] pt-[88px] offset.
+    <div className="relative isolate -mt-[88px] bg-off-white pt-[88px] text-off-black">
+      {/* === Hero (Figma 56:5283) ===
+          Centered headline + intro. Email link uses the warm oxide
+          underline that recurs across the v2 site. */}
+      <section className="container-gutter pt-20 pb-12 md:pt-28 md:pb-16">
+        <div className="mx-auto flex max-w-[760px] flex-col items-center text-center">
+          <p className="font-mono text-sm uppercase tracking-[0.24em] text-oxide-200">
+            FAQ
+          </p>
+          <h1 className="mt-5 font-serif text-[clamp(3rem,5.5vw+0.5rem,4.5rem)] leading-[1.05] text-off-black text-balance">
+            Good questions.
+          </h1>
+          <p className="mt-6 max-w-[58ch] font-sans text-lg leading-[1.55] text-off-black/75 text-pretty">
+            Something we didn't cover? Ask Ava in the bottom right, or drop us a line at{" "}
+            <a
+              href="mailto:hello@thesynapse.co"
+              className="text-oxide-200 underline decoration-oxide-200 decoration-2 underline-offset-4 link-glow"
+            >
+              hello@thesynapse.co
+            </a>
+            .
+          </p>
+        </div>
+      </section>
+
+      {/* === Accordion sections ===
+          Per Taylor's 06-08 R1 audit, the hairline border above each
+          category was removed -- category eyebrow now sits alone above
+          the accordion rows. */}
+      <section className="container-gutter pb-24 md:pb-section">
+        <div className="mx-auto max-w-[960px] space-y-16 md:space-y-20">
+          {CATEGORIES.map((key) =>
+            grouped[key].length === 0 ? null : (
+              <section key={key} id={key}>
+                <p className="font-mono text-xs uppercase tracking-[0.28em] text-off-black/55">
+                  {key}
+                </p>
+                <FaqAccordion items={grouped[key]} />
+              </section>
+            ),
+          )}
+        </div>
+      </section>
     </div>
   );
 }

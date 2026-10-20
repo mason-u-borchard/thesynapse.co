@@ -1,4 +1,5 @@
 "use client";
+// _Last updated: 2026-06-28_ (Ava openers: + domain prompts and "More questions" toggle)
 
 import { useEffect, useRef, useState } from "react";
 import { useChat } from "ai/react";
@@ -7,23 +8,39 @@ import { cx } from "@/lib/cx";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { clearConversation } from "@/components/concierge/storage";
 
-const suggestedOpeners = [
-  "What types of sessions will be included?",
+// Default openers shown when the panel opens. First five render
+// immediately; the rest sit behind a "More questions" toggle so the
+// empty-state stays scannable while still surfacing the subject-matter
+// prompts Ava handles well.
+const defaultOpeners = [
+  "How do AI and robotics relate to consciousness?",
+  "Why bring four fields into one room?",
   "How can I apply to participate?",
+  "Who is welcome to apply to attend?",
+  "Where is the conference being held?",
+];
+
+const expandedOpeners = [
+  "What does embodied cognition mean for AI?",
+  "What are some key debates in consciousness studies?",
+  "How is The Synapse different from other interdisciplinary conferences?",
+  "What types of sessions will be included?",
   "Who are the speakers this year?",
   // "What can I expect as far as the day-to-day experience at the conference?",
-  "Who is welcome to apply to attend?",
   // "What requirements are required in order to apply to become a speaker?",
-  // "Will there be vendors?",
-  "Can I apply to be a vendor?",
-  "Where is the conference being held?",
   // "Is childcare available?",
-  "What accessibility accommodations do you offer?",
 ];
 
 export function Concierge() {
   const [open, setOpen] = useState(false);
   const [offline, setOffline] = useState(false);
+  // Per Taylor's Figma note (2026-05-07): "Perhaps it sticks once
+  // you hit the last section, before the cityscape pre-footer."
+  // Implementation: observe the page footer; when its top edge
+  // enters the viewport, fade out the floating Ava button so it
+  // doesn't overlap the dark cityscape + footer.
+  const [nearFooter, setNearFooter] = useState(false);
+  const [showAllOpeners, setShowAllOpeners] = useState(false);
   const transcriptRef = useRef<HTMLDivElement | null>(null);
   const prefersReduced = useReducedMotion();
 
@@ -59,6 +76,17 @@ export function Concierge() {
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
+  useEffect(() => {
+    const footer = document.querySelector("footer");
+    if (!footer) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setNearFooter(entry?.isIntersecting ?? false),
+      { rootMargin: "0px 0px -50% 0px" },
+    );
+    observer.observe(footer);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <>
       <button
@@ -66,10 +94,39 @@ export function Concierge() {
         aria-label={open ? "Close Ava, the conference concierge" : "Open Ava, the conference concierge"}
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
-        className="group fixed bottom-5 right-5 z-40 inline-flex h-14 items-center gap-3 rounded-pill border border-border-strong bg-surface pl-5 pr-4 text-sm shadow-paper transition-transform hover:-translate-y-0.5 hover:shadow-glow md:bottom-8 md:right-8"
+        // bottom/right are inlined so we can compose `env(safe-area-inset-*)` with a
+        // baseline gutter. Several mobile browsers (iOS Safari in particular) effectively
+        // shift fixed-position elements past the right edge when the page introduces any
+        // horizontal scroll or when the safe-area inset is nonzero; the max() guarantees
+        // a 16px gutter on phones while still respecting notched devices.
+        style={{
+          right: "max(1rem, env(safe-area-inset-right))",
+          bottom: "max(1rem, env(safe-area-inset-bottom))",
+        }}
+        className={cx(
+          // Dark amethyst pill with the Synapse "S" mark and italic
+          // serif text, per Taylor's 06-04 Figma audit ("See design").
+          // Was the light cream pill with the eyes-and-smile ConciergeGlyph.
+          "group fixed z-40 inline-flex h-14 max-w-[calc(100vw-2rem)] items-center gap-3 whitespace-nowrap rounded-pill bg-amethyst-300 pl-4 pr-5 text-sm text-off-white shadow-[5px_5px_18px_-6px_rgba(144,90,140,0.45)] transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-glow md:!bottom-8 md:!right-8",
+          // Fade and lift out of the way once the user is in the
+          // footer / cityscape pre-footer area. The dialog itself
+          // (when open) stays interactive regardless.
+          nearFooter && !open && "pointer-events-none opacity-0 translate-y-4",
+        )}
       >
-        <ConciergeGlyph active={open} />
-        <span className="font-serif italic tracking-tight">{open ? "Close Ava" : "Ask Ava"}</span>
+        <span
+          aria-hidden="true"
+          className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-off-white/10"
+        >
+          <img
+            src="/figma/synapse-icon.svg"
+            alt=""
+            width={20}
+            height={22}
+            className="h-[22px] w-[20px]"
+          />
+        </span>
+        <span className="font-serif italic tracking-tight text-off-white">{open ? "Close Ava" : "Ask Ava"}</span>
       </button>
 
       <AnimatePresence>
@@ -111,7 +168,7 @@ export function Concierge() {
                     something to start, or ask anything.
                   </p>
                   <ul className="mt-3 flex flex-wrap gap-2">
-                    {suggestedOpeners.map((question) => (
+                    {(showAllOpeners ? [...defaultOpeners, ...expandedOpeners] : defaultOpeners).map((question) => (
                       <li key={question}>
                         <button
                           type="button"
@@ -122,6 +179,18 @@ export function Concierge() {
                         </button>
                       </li>
                     ))}
+                    {expandedOpeners.length > 0 && (
+                      <li>
+                        <button
+                          type="button"
+                          onClick={() => setShowAllOpeners((v) => !v)}
+                          aria-expanded={showAllOpeners}
+                          className="rounded-pill px-3 py-1 text-xs text-muted-foreground underline-offset-2 hover:text-ink hover:underline"
+                        >
+                          {showAllOpeners ? "Fewer questions" : `More questions (+${expandedOpeners.length})`}
+                        </button>
+                      </li>
+                    )}
                   </ul>
                 </div>
               )}

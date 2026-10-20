@@ -2,7 +2,7 @@ import { NextRequest } from "next/server";
 import { z } from "zod";
 import { identifierFromHeaders, rateLimit } from "@/lib/rate-limit";
 import { recordSubmission } from "@/lib/sheets-sink";
-import { sendConfirmationEmail } from "@/lib/email";
+import { sendAdminNotification, sendConfirmationEmail } from "@/lib/email";
 
 export const runtime = "nodejs";
 
@@ -11,6 +11,7 @@ const registrationSchema = z.object({
   email: z.string().email(),
   city: z.string().min(1).max(120),
   country: z.string().min(1).max(120),
+  usState: z.string().max(120).optional().default(""),
   affiliation: z.string().min(1).max(200),
   gender: z.enum([
     "male",
@@ -20,9 +21,28 @@ const registrationSchema = z.object({
     "other",
     "prefer-not-to-say",
   ]),
+  genderOther: z.string().max(60).optional().default(""),
   bio: z.string().min(1).max(2000),
   directoryConsent: z.enum(["yes", "no"]),
-  isSpeaker: z.enum(["yes", "no"]),
+  // Contributor section (Kelly's 2026-05-26 redesign). contribute
+  // replaces the old isSpeaker; contributionType + the per-type fields
+  // are only present when contribute === "yes" and one type is picked,
+  // so everything past `contribute` is optional.
+  contribute: z.enum(["yes", "no"]),
+  contributionType: z.enum(["present", "experience", "facilitate"]).optional(),
+  attendIfNotSelected: z.enum(["yes", "no"]).optional(),
+  presentTitle: z.string().max(300).optional().default(""),
+  presentAbstract: z.string().max(5000).optional().default(""),
+  presentCoauthors: z.string().max(1000).optional().default(""),
+  presentResisted: z.string().max(3000).optional().default(""),
+  experienceTitle: z.string().max(300).optional().default(""),
+  experienceDescription: z.string().max(3000).optional().default(""),
+  experienceMedium: z.string().max(500).optional().default(""),
+  experienceNeeds: z.string().max(500).optional().default(""),
+  experienceLink: z.string().max(500).optional().default(""),
+  facilitateOffering: z.string().max(3000).optional().default(""),
+  facilitateExperience: z.string().max(2000).optional().default(""),
+  facilitateMatching: z.string().max(40).optional().default(""),
   essay1: z.string().min(1).max(3000),
   essay2: z.string().min(1).max(3000),
   guidelinesAgreement: z.string().refine((v) => v === "on", {
@@ -30,11 +50,18 @@ const registrationSchema = z.object({
   }),
   pronouns: z.string().max(60).optional().default(""),
   referral: z.string().max(300).optional().default(""),
-  speakerUploadFilename: z.string().max(500).optional().default(""),
   reflection: z.string().max(2000).optional().default(""),
   dietary: z.string().max(400).optional().default(""),
   access: z.string().max(2000).optional().default(""),
-  company_website: z.string().max(0).optional(),
+  // Honeypot. Bots fill this hidden field; humans never see it. We used
+  // to reject a filled value outright (max(0)), but an aggressive
+  // password manager / autofill extension can populate an off-screen
+  // field on a real applicant -- and rejecting silently dropped their
+  // application. Now we accept it (cap the length so it can't be abused
+  // as a large free-text field) and flag the submission downstream
+  // instead of throwing it away. Fail closed: a saved-and-flagged real
+  // applicant beats a silently-lost one.
+  company_website: z.string().max(200).optional().default(""),
 });
 
 const contactSchema = z.object({
@@ -72,20 +99,28 @@ export async function POST(req: NextRequest) {
     return json({ message }, 422);
   }
 
+  // A filled honeypot means "probably a bot" -- but we no longer reject
+  // it (see the schema note). We persist it with a flag and skip the
+  // applicant-facing confirmation email so we never email a bot address.
+  const honeypotHit =
+    parsedBody.kind === "registration" &&
+    typeof payload.data.company_website === "string" &&
+    payload.data.company_website.trim().length > 0;
+
+  const persistPayload = buildPersistPayload(
+    parsedBody.kind,
+    payload.data,
+    honeypotHit,
+  );
+
+  // Step 1: persist. This is the only step that may surface as a failure
+  // to the applicant -- if we couldn't save the submission, they need to
+  // know it didn't go through.
+  let result;
   try {
-    const { confirmationId, persisted } = await recordSubmission(
-      parsedBody.kind,
-      payload.data as Record<string, unknown>,
-    );
-
-    if (parsedBody.kind === "registration") {
-      const data = payload.data as z.infer<typeof registrationSchema>;
-      await sendConfirmationEmail({ to: data.email, fullName: data.fullName, confirmationId });
-    }
-
-    return json({ confirmationId, persisted }, 200);
+    result = await recordSubmission(parsedBody.kind, persistPayload);
   } catch (error) {
-    console.error("[submit-form] unhandled error", error);
+    console.error("[submit-form] persistence failed", error);
     return json(
       {
         message:
@@ -94,11 +129,63 @@ export async function POST(req: NextRequest) {
       500,
     );
   }
+
+  const { confirmationId, persisted } = result;
+
+  // Step 2: notify. The application is SAVED now, so nothing below may
+  // turn into an error for the applicant -- a confirmation-email hiccup,
+  // a Resend outage, or general slowness must not make a saved submission
+  // look like it failed (this was the "we have your application but you
+  // saw an error" report). Both sends fire concurrently (shaves latency
+  // versus awaiting them in series) and every failure is swallowed;
+  // delivery is best-effort and independently logged inside each sender.
+  if (parsedBody.kind === "registration") {
+    const data = payload.data as z.infer<typeof registrationSchema>;
+    try {
+      await Promise.allSettled([
+        honeypotHit
+          ? Promise.resolve()
+          : sendConfirmationEmail({
+              to: data.email,
+              fullName: data.fullName,
+              confirmationId,
+            }),
+        sendAdminNotification({ confirmationId, payload: persistPayload }),
+      ]);
+    } catch (notifyError) {
+      console.error("[submit-form] post-persist notification failed", notifyError);
+    }
+  }
+
+  return json({ confirmationId, persisted }, 200);
 }
 
 function normalizePayload(raw: unknown): Record<string, unknown> {
   if (!raw || typeof raw !== "object") return {};
   return { ...(raw as Record<string, unknown>) };
+}
+
+// Collapses the "Other" gender split-field into a single sheet value:
+// blank text → "Other", typed text → "Other: <text>". Drops genderOther
+// so it doesn't surface as a separate column or in the JSON dump. When
+// the honeypot tripped, drops the honeypot value itself (never worth
+// storing a bot's URL) and stamps a `flag` the sheet + admin email pick
+// up so the team can eyeball or filter these.
+function buildPersistPayload(
+  kind: "registration" | "contact",
+  data: Record<string, unknown>,
+  honeypotHit = false,
+): Record<string, unknown> {
+  if (kind !== "registration") return data;
+  const next = { ...data };
+  if (next.gender === "other") {
+    const extra = typeof next.genderOther === "string" ? next.genderOther.trim() : "";
+    next.gender = extra ? `Other: ${extra}` : "Other";
+  }
+  delete next.genderOther;
+  delete next.company_website;
+  if (honeypotHit) next.flag = "possible-spam (honeypot triggered)";
+  return next;
 }
 
 function json(body: unknown, status: number) {

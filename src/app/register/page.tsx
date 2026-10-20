@@ -1,7 +1,7 @@
+// _Last updated: 2026-10-18_
 import type { Metadata } from "next";
 import Link from "next/link";
 import { KeepInLoopForm } from "@/components/keep-in-loop-form";
-import { ApplicationForm } from "@/components/application-form";
 
 // #PLACEHOLDER: To preview the prototype application form on /register
 // locally (e.g. for committee walkthroughs), uncomment the import below
@@ -11,7 +11,7 @@ import { ApplicationForm } from "@/components/application-form";
 
 export const metadata: Metadata = {
   title: "Apply to Participate",
-  description: "The Synapse is a curated gathering of 75 participants. Leave your details and we'll reach out when the application window opens.",
+  description: "Applications for The Synapse closed on October 15, 2026. Every applicant hears back by December 1, 2026.",
 };
 
 export default function RegisterPage() {
@@ -53,23 +53,17 @@ export default function RegisterPage() {
       </section> */}
       {/* === END LIVE === */}
 
-      {/* === PROTOTYPE === #PLACEHOLDER -- keep COMMENTED in committed code === */}
+      {/* Form removed 2026-10-18 -- applications closed October 15. */}
       <header className="max-w-2xl">
         <p className="eyebrow mb-4">Apply</p>
-        <h1 className="text-display-lg text-balance">Apply to participate.</h1>
+        <h1 className="text-display-lg text-balance">Applications are closed.</h1>
         <p className="mt-6 max-w-prose text-lg leading-relaxed text-muted-foreground text-pretty">
-          The Synapse is a curated gathering of 75 participants in
-          Atlanta this October. Most places are invitation-based; a
-          small number open through this application window. Take your
-          time -- we read every submission carefully and will be in
-          touch within two weeks.
+          The application window closed on October 15, 2026. The team is
+          reviewing the full pool together and will let every applicant
+          know yes or no by December 1, 2026. If you&apos;ve already
+          applied, there&apos;s nothing more you need to do.
         </p>
       </header>
-      <section aria-labelledby="application-heading" className="mt-12 max-w-2xl">
-        <h2 id="application-heading" className="sr-only">Participant application</h2>
-        <ApplicationForm />
-      </section>
-      {/* === END PROTOTYPE === */}
     </div>
   );
 }

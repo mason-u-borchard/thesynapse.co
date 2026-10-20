@@ -32,6 +32,19 @@ export interface Speaker {
   keynote?: boolean;
 }
 
+export type FieldId = "ai" | "robotics" | "cogsci" | "consciousness";
+
+export interface Scholar {
+  slug: string;
+  name: string;
+  affiliation: string;
+  fields: FieldId[];
+  researchAreas: string[];
+  notableWorks: { title: string; year: number; venue: string; url: string }[];
+  bridgesNote?: string;
+  profileUrl: string;
+}
+
 export type Track =
   | "Plenary"
   | "Foundations"
@@ -71,5 +84,5 @@ export interface FaqEntry {
   id: string;
   question: string;
   answer: string;
-  category: "registration" | "travel" | "access" | "submissions" | "conduct" | "program";
+  category: "attend" | "invest" | "travel" | "accessibility" | "program";
 }

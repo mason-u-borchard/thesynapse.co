@@ -1,7 +1,8 @@
-// _Last updated: 2026-09-14_
+// _Last updated: 2026-10-31_
 import type { Metadata } from "next";
 import Link from "next/link";
 import { DisciplineCard } from "@/components/discipline-card";
+import { SpeakerGrid } from "@/components/speaker-grid";
 import { meta } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -288,6 +289,11 @@ export default function ProgramPage() {
           </Link>
         </div>
       </section>
+
+      {/* === Who you'll hear from (Figma 444:603, "Disciplines" frame) ===
+          Speaker banner + grid, inserted between the hero and the
+          schedule per Taylor's program layout. */}
+      <SpeakerGrid eyebrow="Speakers across AI, robotics, cognitive science, and consciousness" />
 
       {/* === Schedule timeline (Figma 444:613) ===
           Three days, each with a colored vertical rail on the left

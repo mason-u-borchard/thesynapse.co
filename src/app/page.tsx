@@ -1,8 +1,9 @@
-// _Last updated: 2026-10-18_
+// _Last updated: 2026-10-31_
 import Link from "next/link";
 import { meta } from "@/lib/content";
 import { HeroTicker } from "@/components/hero-ticker";
 import { DisciplineCard } from "@/components/discipline-card";
+import { SpeakerCarousel } from "@/components/speaker-carousel";
 
 // Home title + description come from the layout's default metadata
 // (Kelly's 2026-05-26 SEO copy) so there's a single source of truth.
@@ -466,6 +467,10 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Who you'll hear from (Figma 697:4550). Speaker carousel teaser
+          between the program-arc preview and the footer CTA. */}
+      <SpeakerCarousel />
     </>
   );
 }

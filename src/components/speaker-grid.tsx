@@ -9,14 +9,8 @@
 // Shared by the program page and the homepage; the banner heading and
 // eyebrow are props so each surface can word its own.
 
-import { featuredSpeakers, type SpeakerAccent } from "@/content/featured-speakers";
-
-const accentStyles: Record<SpeakerAccent, { circle: string; flower: string }> = {
-  amethyst: { circle: "bg-amethyst-100", flower: "/figma/graphic-ai.svg" },
-  oxide: { circle: "bg-oxide-100", flower: "/figma/graphic-robotics.svg" },
-  orchid: { circle: "bg-orchid-100", flower: "/figma/graphic-cs.svg" },
-  moss: { circle: "bg-moss-100", flower: "/figma/graphic-consciousness.svg" },
-};
+import { featuredSpeakers } from "@/content/featured-speakers";
+import { SpeakerAvatar } from "./speaker-avatar";
 
 export function SpeakerGrid({
   heading = "Who you'll hear from",
@@ -72,38 +66,5 @@ export function SpeakerGrid({
         </ul>
       </div>
     </section>
-  );
-}
-
-function SpeakerAvatar({ speaker }: { speaker: (typeof featuredSpeakers)[number] }) {
-  const accent = accentStyles[speaker.accent];
-  const size =
-    "h-[138px] w-[138px] md:h-[180px] md:w-[180px] lg:h-[200px] lg:w-[200px]";
-
-  if (speaker.headshot) {
-    return (
-      <div
-        className={`relative shrink-0 overflow-hidden rounded-full bg-neutral-100 ${size}`}
-      >
-        <img
-          src={speaker.headshot}
-          alt={speaker.name}
-          className="absolute inset-0 h-full w-full object-cover grayscale"
-        />
-      </div>
-    );
-  }
-
-  return (
-    <div
-      className={`flex shrink-0 items-center justify-center rounded-full ${accent.circle} ${size}`}
-    >
-      <img
-        src={accent.flower}
-        alt=""
-        aria-hidden="true"
-        className="h-[62%] w-[62%] object-contain"
-      />
-    </div>
   );
 }

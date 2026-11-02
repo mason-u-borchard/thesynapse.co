@@ -1,6 +1,8 @@
+// _Last updated: 2026-11-01_
 import { describe, expect, it } from "vitest";
 import { assembleConciergePrompt } from "@/lib/concierge-prompt";
 import { meta, speakers, schedule, faq } from "@/lib/content";
+import { featuredSpeakers } from "@/content/featured-speakers";
 
 describe("concierge prompt", () => {
   const prompt = assembleConciergePrompt("anthropic");
@@ -37,6 +39,19 @@ describe("concierge prompt", () => {
     }
   });
 
+  it("gives Ava every featured speaker the site names, and only names", () => {
+    for (const s of featuredSpeakers) {
+      expect(prompt, `missing featured speaker: ${s.name}`).toContain(`- ${s.name}`);
+    }
+    expect(prompt).toMatch(/not the full roster/);
+    expect(prompt).toMatch(/Only the names are public/);
+  });
+
+  it("states the same capacity everywhere Ava can see it", () => {
+    expect(meta.capacity).toBe(100);
+    expect(prompt).not.toMatch(/\b75 (participants|guests)\b/);
+  });
+
   it("tells Ava not to invent speakers, keynote counts, or hierarchies", () => {
     expect(prompt).toMatch(/NOT yet confirmed/i);
     expect(prompt).toMatch(/Do NOT invent names/);
@@ -45,7 +60,7 @@ describe("concierge prompt", () => {
   });
 
   it("names the organizing co-leads for Ava to reference", () => {
-    expect(prompt).toMatch(/Elatia Abate/);
+    expect(prompt).toMatch(/Julia Mossbridge/);
     expect(prompt).toMatch(/Beth Glick/);
   });
 

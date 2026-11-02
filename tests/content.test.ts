@@ -1,3 +1,4 @@
+// _Last updated: 2026-11-01_
 import { describe, expect, it } from "vitest";
 import { speakers, schedule, faq, committee, sponsors, meta } from "@/lib/content";
 import type { FaqEntry } from "@/types/content";
@@ -38,8 +39,8 @@ describe("content integrity", () => {
     expect(schedule.length).toBe(0);
   });
 
-  it("Atlanta is the declared city and Applied Love Labs is the host", () => {
-    expect(meta.city).toMatch(/Atlanta/);
+  it("San Diego is the declared city and Applied Love Labs is the host", () => {
+    expect(meta.city).toMatch(/San Diego/);
     expect(meta.fiscalSponsor.name).toBe("Applied Love Labs");
   });
 });

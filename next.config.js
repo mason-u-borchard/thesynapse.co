@@ -1,3 +1,4 @@
+// _Last updated: 2026-11-02_
 /** @type {import('next').NextConfig} */
 
 // trim() defends against trailing newlines / whitespace that sometimes
@@ -81,6 +82,11 @@ const nextConfig = {
             { source: "/register/:path*", destination: "/attend/:path*", permanent: true },
             { source: "/schedule", destination: "/program", permanent: true },
             { source: "/schedule/:path*", destination: "/program/:path*", permanent: true },
+            // The speaker grid lives on /program now. Temporary (307) rather
+            // than permanent so browsers don't cache it if /speakers ever
+            // comes back as its own page.
+            { source: "/speakers", destination: "/program", permanent: false },
+            { source: "/speakers/:path*", destination: "/program", permanent: false },
           ];
         },
       }),

@@ -1,3 +1,4 @@
+# _Last updated: 2026-11-02_
 name: ci
 
 on:
@@ -24,6 +25,17 @@ jobs:
       - run: npm run typecheck
       - run: npm test -- --run
       - run: npm run build
+      # End-to-end checks against the production build above. Playwright's
+      # webServer starts it with `npm run start` on :3021. No model key is set
+      # here, and the Ava test stubs /api/chat, so nothing calls a real model.
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
 
   lighthouse:
     runs-on: ubuntu-latest

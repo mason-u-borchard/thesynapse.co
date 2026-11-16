@@ -1,4 +1,5 @@
 "use client";
+// _Last updated: 2026-11-15_
 
 import { useState, type FormEvent } from "react";
 
@@ -14,6 +15,9 @@ type Status =
 // the button enables as soon as someone finishes typing.
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+// Applications for 2027 closed Oct 15, 2026, so the site's main call to
+// action is now this list for the next edition (Taylor + Kelly, Nov 2026).
+// Sign-ups land in the same submissions sheet as every other contact form.
 export function NotifyForm({ id, className }: { id: string; className?: string }) {
   const [status, setStatus] = useState<Status>({ kind: "idle" });
   const [email, setEmail] = useState("");
@@ -45,7 +49,7 @@ export function NotifyForm({ id, className }: { id: string; className?: string }
           payload: {
             fullName: "Notify list",
             email: submittedEmail,
-            message: "Notify me when applications open.",
+            message: "Notify me when 2028 applications open.",
           },
         }),
       });
@@ -72,7 +76,7 @@ export function NotifyForm({ id, className }: { id: string; className?: string }
         role="status"
         aria-live="polite"
       >
-        You&rsquo;re on the list &mdash; we&rsquo;ll be in touch when applications open.
+        You&rsquo;re on the list. We&rsquo;ll email you when 2028 applications open.
       </div>
     );
   }
@@ -105,13 +109,13 @@ export function NotifyForm({ id, className }: { id: string; className?: string }
           autoComplete="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="flex-1 bg-transparent px-5 py-3 font-sans text-base text-off-black placeholder:text-off-black/40 focus:outline-none"
+          className="w-0 min-w-0 flex-1 bg-transparent px-5 py-3 font-sans text-base text-off-black placeholder:text-off-black/40 focus:outline-none"
         />
         <button
           type="submit"
           disabled={!isValidEmail || status.kind === "submitting"}
           aria-disabled={!isValidEmail || status.kind === "submitting"}
-          className="m-1 inline-flex items-center btn-solid-glow rounded-full bg-oxide-100 px-5 font-noto text-base font-semibold text-off-black transition-transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
+          className="m-1 inline-flex shrink-0 items-center whitespace-nowrap btn-solid-glow rounded-full bg-oxide-100 px-5 font-noto text-base font-semibold text-off-black transition-transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
         >
           {status.kind === "submitting" ? "Sending…" : "Notify me"}
         </button>

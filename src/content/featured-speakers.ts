@@ -1,4 +1,4 @@
-// _Last updated: 2026-10-31_
+// _Last updated: 2026-11-16_
 //
 // The curated "Who you'll hear from" lineup, shared by the program page
 // and the homepage speakers carousel. This is not the full roster -- it is
@@ -26,12 +26,13 @@ export const featuredSpeakers: FeaturedSpeaker[] = [
   { name: "Annalisa Ventola", headshot: "/figma/speakers/annalisa-ventola.jpg", accent: "oxide" },
   { name: "Carole Griggs", headshot: "/figma/speakers/carole-griggs.jpg", accent: "orchid" },
   { name: "Dani Caputi", headshot: "/figma/speakers/dani-caputi.jpg", accent: "moss" },
-  { name: "Danielle Boyer", accent: "oxide" },
+  { name: "Danielle Boyer", accent: "amethyst" },
   { name: "Divya Chander", headshot: "/figma/speakers/divya-chander.jpg", accent: "amethyst" },
   { name: "Helané Wahbeh", headshot: "/figma/speakers/helane-wahbeh.jpg", accent: "oxide" },
   { name: "Julia Mossbridge", headshot: "/figma/speakers/julia-mossbridge.jpg", accent: "orchid" },
+  { name: "Lily Sherwood", accent: "oxide" },
   { name: "Mason Borchard", headshot: "/figma/speakers/mason-borchard.jpg", accent: "moss" },
-  { name: "Monica Anderson", accent: "amethyst" },
+  { name: "Monica Anderson", accent: "orchid" },
   { name: "Nirosha Murugan", headshot: "/figma/speakers/nirosha-murugan.jpg", accent: "moss" },
   { name: "Polly Washburn", headshot: "/figma/speakers/polly-washburn.jpg", accent: "amethyst" },
   { name: "Rachel Grunspan", headshot: "/figma/speakers/rachel-grunspan.jpg", accent: "oxide" },

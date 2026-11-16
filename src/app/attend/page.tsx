@@ -1,13 +1,14 @@
-// _Last updated: 2026-10-18_
+// _Last updated: 2026-11-15_
 import type { Metadata } from "next";
 import Link from "next/link";
 import { FlaskConical, Building2, Atom, Flame, Sparkles } from "lucide-react";
 import { DisciplineCard } from "@/components/discipline-card";
+import { NotifyForm } from "@/components/notify-form";
 
 export const metadata: Metadata = {
   title: { absolute: "Attend The Synapse | San Diego · May 3–6, 2027" },
   description:
-    "Apply to join 100 invited guests in San Diego for a three-day gathering exploring AI, robotics, cognitive science, and consciousness.",
+    "100 invited guests in San Diego for a three-day gathering exploring AI, robotics, cognitive science, and consciousness. Applications for 2027 are closed; join the list to hear when 2028 applications open.",
 };
 
 // Audience list per Figma 80:3224. Icon glyphs mirror the lucide
@@ -50,18 +51,20 @@ export default function AttendPage() {
                 This is a small gathering by design. A limited number of places are open to those who support a high-trust, high-contribution environment &mdash; people working in disciplines that don&apos;t have names yet, and those committed to stand with them: researchers and builders, scholars and practitioners, academics and executives.
               </p>
             </div>
-            {/* Deadline plate and Apply CTA removed 2026-10-18 --
-                applications closed October 15. Same treatment as the
-                2026-08-12 close. */}
-            <div className="mt-8">
-              <span
-                aria-disabled="true"
-                className="inline-flex h-[50px] cursor-not-allowed items-center rounded-full bg-off-black/10 px-6 font-noto text-lg font-semibold text-off-black/50"
-              >
-                Applications closed
-              </span>
+            {/* 2027 applications closed October 15. The disabled
+                "Applications closed" pill was swapped 2026-11-15 for the
+                2028 notify list, which every "Notify me" CTA on the site
+                points at (#notify). */}
+            <div id="notify" className="mt-8 scroll-mt-28">
+              <p className="font-mono text-sm uppercase tracking-[0.14em] text-off-black/80">
+                Applications for 2027 are closed
+              </p>
+              <p className="mt-3 max-w-[591px] font-sans text-base leading-[1.5] text-off-black">
+                Leave your email and we&rsquo;ll let you know when applications open for 2028.
+              </p>
+              <NotifyForm id="notify-2028" className="mt-5" />
               <p className="mt-4 max-w-[591px] font-sans text-base leading-[1.5] text-off-black/70">
-                Every applicant hears back by December 1, 2026.
+                Already applied for 2027? Every applicant hears back by December 1, 2026.
               </p>
             </div>
           </div>
@@ -181,12 +184,12 @@ export default function AttendPage() {
             AI, robotics, cognitive science, and consciousness are being developed in silos. The questions that matter most live between them.
           </h2>
           <div className="mt-10">
-            <span
-              aria-disabled="true"
-              className="inline-flex h-[50px] cursor-not-allowed items-center rounded-full bg-off-black/10 px-6 font-noto text-lg font-semibold text-off-black/50"
+            <a
+              href="#notify"
+              className="inline-flex h-[50px] items-center btn-outline-glow rounded-full border border-off-black/80 px-6 font-noto text-lg font-semibold text-off-black/80 transition-colors hover:bg-off-black/5"
             >
-              Applications closed
-            </span>
+              Notify me about 2028
+            </a>
           </div>
           <div className="mt-16 grid w-full max-w-[1488px] grid-cols-1 gap-3 min-[440px]:grid-cols-2 min-[440px]:gap-4 lg:grid-cols-4 lg:gap-6">
             <DisciplineCard

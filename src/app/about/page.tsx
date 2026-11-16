@@ -1,4 +1,4 @@
-// _Last updated: 2026-10-07_
+// _Last updated: 2026-11-15_
 import type { Metadata } from "next";
 import Link from "next/link";
 import { meta } from "@/lib/content";
@@ -87,10 +87,10 @@ export default function AboutPage() {
               Fund the room
             </Link>
             <Link
-              href="/attend"
+              href="/attend#notify"
               className="inline-flex h-[50px] items-center btn-outline-glow rounded-full border border-off-black/80 px-6 font-noto text-lg font-semibold text-off-black/80 transition-colors hover:bg-off-black/5"
             >
-              Apply to attend
+              Notify me about 2028
             </Link>
           </div>
         </div>
@@ -158,10 +158,10 @@ export default function AboutPage() {
                 Fund the room
               </Link>
               <Link
-                href="/attend"
+                href="/attend#notify"
                 className="inline-flex h-[50px] items-center btn-outline-glow rounded-full border border-off-white/80 px-6 font-noto text-lg font-semibold text-off-white transition-colors hover:bg-off-white/10"
               >
-                Apply to attend
+                Notify me about 2028
               </Link>
             </div>
           </div>
@@ -211,10 +211,10 @@ export default function AboutPage() {
                 Fund the room
               </Link>
               <Link
-                href="/attend"
+                href="/attend#notify"
                 className="inline-flex h-[50px] items-center btn-outline-glow rounded-full border border-off-white/80 px-6 font-noto text-lg font-semibold text-off-white transition-colors hover:bg-off-white/10"
               >
-                Apply to attend
+                Notify me about 2028
               </Link>
             </div>
           </div>
@@ -271,10 +271,10 @@ export default function AboutPage() {
           </div>
           <div className="mt-12">
             <Link
-              href="/attend"
+              href="/attend#notify"
               className="inline-flex h-[50px] items-center btn-outline-glow rounded-full border border-off-black/80 px-6 font-noto text-lg font-semibold text-off-black/80 transition-colors hover:bg-off-black/5"
             >
-              Apply to attend
+              Notify me about 2028
             </Link>
           </div>
         </div>

@@ -1,4 +1,5 @@
 "use client";
+// _Last updated: 2026-11-15_
 
 import { useState } from "react";
 import Link from "next/link";
@@ -77,10 +78,10 @@ export function ConstellationView() {
               Back to About
             </Link>
             <Link
-              href="/attend"
+              href="/attend#notify"
               className="inline-flex h-[44px] items-center btn-solid-glow rounded-full bg-oxide-100 px-5 font-noto text-base font-semibold text-off-black transition-transform hover:-translate-y-0.5"
             >
-              Apply to attend
+              Notify me about 2028
             </Link>
           </div>
         </div>

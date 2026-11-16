@@ -1,4 +1,4 @@
-// _Last updated: 2026-10-31_
+// _Last updated: 2026-11-16_
 //
 // "Who you'll hear from" speaker section from Taylor's Figma (node 444:603).
 // A dark plum banner with a serif heading and a mono eyebrow, then a grid
@@ -11,6 +11,7 @@
 
 import { featuredSpeakers } from "@/content/featured-speakers";
 import { SpeakerAvatar } from "./speaker-avatar";
+import { SectionBanner } from "./section-banner";
 
 export function SpeakerGrid({
   heading = "Who you'll hear from",
@@ -22,32 +23,21 @@ export function SpeakerGrid({
   return (
     <section className="bg-off-white py-section">
       <div className="container-gutter flex flex-col items-center gap-12 md:gap-20">
-        {/* Banner (Figma Frame 100): dark plum, rounded, serif heading over
-            a mono eyebrow, with Synapse flowers peeking from the corners. */}
-        <div className="relative w-full max-w-[1488px] overflow-hidden rounded-3xl bg-amethyst-300 px-6 py-16 text-center md:px-16 md:py-24">
-          <img
-            src="/figma/graphic-cs.svg"
-            alt=""
-            aria-hidden="true"
-            className="pointer-events-none absolute -left-8 top-6 hidden h-28 w-28 rotate-[15deg] opacity-80 md:block lg:-left-4 lg:h-32 lg:w-32"
-          />
-          <img
-            src="/figma/graphic-ai.svg"
-            alt=""
-            aria-hidden="true"
-            className="pointer-events-none absolute -right-6 bottom-4 hidden h-28 w-28 -rotate-[20deg] opacity-80 md:block lg:h-32 lg:w-32"
-          />
-          <div className="relative flex flex-col items-center gap-4">
-            <h2 className="max-w-[903px] font-serif font-semibold text-[clamp(1.75rem,5vw+0.5rem,6.75rem)] leading-[1.15] text-true-white">
-              {heading}
-            </h2>
-            {eyebrow ? (
-              <p className="max-w-[591px] font-mono text-sm font-light uppercase leading-[1.4] tracking-[0.14em] text-true-white">
-                {eyebrow}
-              </p>
-            ) : null}
-          </div>
-        </div>
+        {/* Banner (Figma Frame 100): dark plum, serif heading over a mono
+            eyebrow. Flowers per Taylor's 2026-11-05 Loom: a pink and lilac
+            pair overlapping just left of the heading, a lilac one low in
+            the left corner and a pink one up on the right. */}
+        <SectionBanner
+          heading={heading}
+          eyebrow={eyebrow}
+          bg="bg-amethyst-300"
+          ornaments={[
+            { tone: "orchid", className: "left-[11%] top-[12%] w-[9%] min-w-[44px] rotate-[12deg]" },
+            { tone: "amethyst", className: "left-[12%] top-[36%] w-[9%] min-w-[44px] -rotate-[8deg]" },
+            { tone: "amethyst", className: "left-[4%] bottom-[8%] w-[8%] min-w-[38px] rotate-[20deg]" },
+            { tone: "orchid", className: "right-[13%] top-[18%] w-[8%] min-w-[38px] -rotate-[15deg]" },
+          ]}
+        />
 
         {/* Speaker grid (Figma Frame 103): wrapping cards, each a circular
             avatar over a centered name. */}

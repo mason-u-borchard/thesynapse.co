@@ -1,14 +1,15 @@
-// _Last updated: 2026-10-31_
+// _Last updated: 2026-11-16_
 import type { Metadata } from "next";
 import Link from "next/link";
 import { DisciplineCard } from "@/components/discipline-card";
 import { SpeakerGrid } from "@/components/speaker-grid";
+import { SectionBanner } from "@/components/section-banner";
 import { meta } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: { absolute: "Program | The Synapse — San Diego · May 3-6, 2027" },
   description:
-    "Three days built around four disciplines and the spaces between them. Workshops, facilitated dialogue, and structured time for the conversations that usually only happen in hallways.",
+    "Three days built around four disciplines. Workshops, facilitated dialogue, and structured time for the conversations that connect and intertwine these fields.",
 };
 
 // Program page per Taylor's 2026-06-16 Figma (node 444:603). Hero +
@@ -279,13 +280,13 @@ export default function ProgramPage() {
             </span>
           </h1>
           <p className="max-w-[608px] font-sans text-[clamp(1rem,0.4vw+0.875rem,1.25rem)] leading-[1.6] text-off-black">
-            Three days built around four disciplines and the spaces between them. Workshops, facilitated dialogue, and structured time for the conversations that usually only happen in hallways.
+            Three days built around four disciplines. Workshops, facilitated dialogue, and structured time for the conversations that connect and intertwine these fields.
           </p>
           <Link
-            href="/attend"
+            href="/attend#notify"
             className="mt-2 inline-flex h-[50px] items-center btn-solid-glow rounded-full bg-oxide-100 px-6 font-noto text-lg font-semibold text-off-black transition-transform hover:-translate-y-0.5"
           >
-            Attend
+            Notify me about 2028
           </Link>
         </div>
       </section>
@@ -293,13 +294,28 @@ export default function ProgramPage() {
       {/* === Who you'll hear from (Figma 444:603, "Disciplines" frame) ===
           Speaker banner + grid, inserted between the hero and the
           schedule per Taylor's program layout. */}
-      <SpeakerGrid eyebrow="Speakers across AI, robotics, cognitive science, and consciousness" />
+      <SpeakerGrid eyebrow="The speakers" />
 
       {/* === Schedule timeline (Figma 444:613) ===
           Three days, each with a colored vertical rail on the left
           (dot + line) and a stack of session cards on the right. */}
       <section className="bg-off-white pb-section">
         <div className="container-gutter flex flex-col gap-20">
+          {/* "Event Schedule" banner above Day 1, from Taylor's Figma and
+              her 2026-11-05 Loom: dark green, green and blue flowers. */}
+          <div className="flex justify-center">
+            <SectionBanner
+              heading="Event Schedule"
+              eyebrow="A 3-day experience"
+              bg="bg-moss-300"
+              ornaments={[
+                { tone: "moss", className: "left-[9%] top-[16%] w-[8%] min-w-[40px] rotate-[10deg]" },
+                { tone: "azure", className: "left-[6%] top-[44%] w-[8%] min-w-[40px] -rotate-[12deg]" },
+                { tone: "azure", className: "right-[33%] bottom-[6%] w-[7%] min-w-[34px] rotate-[18deg]" },
+                { tone: "moss", className: "right-[6%] top-[8%] w-[7%] min-w-[34px] -rotate-[10deg]" },
+              ]}
+            />
+          </div>
           {days.map((day) => (
             <DaySchedule key={day.number} day={day} />
           ))}
@@ -319,10 +335,10 @@ export default function ProgramPage() {
             AI, robotics, cognitive science, and consciousness aren't separate stories. The future is written where they converge.
           </p>
           <Link
-            href="/attend"
+            href="/attend#notify"
             className="mt-2 inline-flex h-[50px] items-center btn-solid-glow rounded-full bg-oxide-100 px-6 font-noto text-lg font-semibold text-off-black transition-transform hover:-translate-y-0.5"
           >
-            Attend
+            Notify me about 2028
           </Link>
           <div className="mt-12 grid w-full max-w-[1488px] grid-cols-1 gap-3 min-[440px]:grid-cols-2 min-[440px]:gap-4 lg:grid-cols-4 lg:gap-6">
             <DisciplineCard

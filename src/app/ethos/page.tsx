@@ -1,3 +1,4 @@
+// _Last updated: 2026-11-15_
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PrincipleCard } from "@/components/principle-card";
@@ -114,10 +115,10 @@ export default function EthosPage() {
               Fund the room
             </Link>
             <Link
-              href="/attend"
+              href="/attend#notify"
               className="inline-flex h-[50px] items-center btn-outline-glow rounded-full border border-off-black/80 px-6 font-noto text-lg font-semibold text-off-black/80 transition-colors hover:bg-off-black/5"
             >
-              Apply to attend
+              Notify me about 2028
             </Link>
           </div>
         </div>
@@ -177,10 +178,10 @@ export default function EthosPage() {
           </p>
           <div className="mt-10">
             <Link
-              href="/attend"
+              href="/attend#notify"
               className="inline-flex h-[50px] items-center btn-outline-glow rounded-full border border-off-black/80 px-6 font-noto text-lg font-semibold text-off-black/80 transition-colors hover:bg-off-black/5"
             >
-              Apply to attend
+              Notify me about 2028
             </Link>
           </div>
         </div>

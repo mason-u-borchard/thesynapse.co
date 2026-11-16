@@ -1,4 +1,4 @@
-// _Last updated: 2026-10-31_
+// _Last updated: 2026-11-16_
 import Link from "next/link";
 import { meta } from "@/lib/content";
 import { HeroTicker } from "@/components/hero-ticker";
@@ -157,10 +157,10 @@ export default function HomePage() {
                 Fund the room
               </Link>
               <Link
-                href="/attend"
+                href="/attend#notify"
                 className="inline-flex h-[50px] items-center btn-outline-glow rounded-full border border-off-white/80 px-6 font-noto text-lg font-semibold text-off-white transition-colors hover:bg-off-white/10"
               >
-                Apply to attend
+                Notify me about 2028
               </Link>
             </div>
           </div>
@@ -229,10 +229,10 @@ export default function HomePage() {
               Fund the room
             </Link>
             <Link
-              href="/attend"
+              href="/attend#notify"
               className="inline-flex h-[50px] items-center btn-outline-glow rounded-full border border-off-black/80 px-6 font-noto text-lg font-semibold text-off-black/80 transition-colors hover:bg-off-black/5"
             >
-              Apply to attend
+              Notify me about 2028
             </Link>
           </div>
           <div className="mt-20 grid w-full max-w-[1488px] grid-cols-1 gap-3 min-[440px]:grid-cols-2 min-[440px]:gap-4 lg:grid-cols-4 lg:gap-6">
@@ -333,10 +333,10 @@ export default function HomePage() {
                 Fund the room
               </Link>
               <Link
-                href="/attend"
+                href="/attend#notify"
                 className="inline-flex h-[50px] items-center btn-outline-glow rounded-full border border-off-white/80 px-6 font-noto text-lg font-semibold text-off-white transition-colors hover:bg-off-white/10"
               >
-                Apply to attend
+                Notify me about 2028
               </Link>
             </div>
           </div>
@@ -437,7 +437,7 @@ export default function HomePage() {
               Not a lecture hall.<br />A living laboratory.
             </h2>
             <p className="mt-6 font-sans text-xl leading-[1.6]">
-              Three days built around four disciplines and the spaces between them. Workshops, facilitated dialogue, and structured time for the conversations that usually only happen in hallways.
+              Three days built around four disciplines. Workshops, facilitated dialogue, and structured time for the conversations that connect and intertwine these fields.
             </p>
             <div className="mt-8">
               <Link

@@ -1,5 +1,5 @@
 "use client";
-// _Last updated: 2026-09-14_
+// _Last updated: 2026-11-15_
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -115,10 +115,10 @@ export function SiteHeader() {
               Invest
             </Link>
             <Link
-              href="/attend"
+              href="/attend#notify"
               className="hidden lg:inline-flex h-10 items-center btn-outline-glow rounded-full border border-off-white/80 px-5 font-noto text-base font-semibold text-off-white transition-colors hover:bg-off-white/10"
             >
-              Attend
+              Get notified
             </Link>
             <button
               type="button"
@@ -149,7 +149,7 @@ export function SiteHeader() {
               </Link>
             ))}
             <Link href="/invest" className="mt-2 btn-solid-glow rounded-full bg-oxide-100 px-5 py-3 text-center font-noto font-semibold text-off-black">Invest</Link>
-            <Link href="/attend" className="btn-outline-glow rounded-full border border-off-white/80 px-5 py-3 text-center font-noto font-semibold text-off-white">Attend</Link>
+            <Link href="/attend#notify" className="btn-outline-glow rounded-full border border-off-white/80 px-5 py-3 text-center font-noto font-semibold text-off-white">Get notified</Link>
           </nav>
         </div>
       )}

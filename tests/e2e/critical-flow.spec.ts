@@ -1,13 +1,27 @@
-// _Last updated: 2026-11-02_
+// _Last updated: 2026-11-15_
 import { test, expect } from "@playwright/test";
 
 test.describe("critical flows", () => {
-  test("home renders hero and the Apply CTA reaches /attend", async ({ page }) => {
+  test("home renders hero and the 2028 CTA reaches the notify form on /attend", async ({ page }) => {
     await page.goto("/");
     await expect(page.getByRole("heading", { level: 1 })).toContainText(/Where women connect/);
-    await page.getByRole("link", { name: /Apply to attend/i }).first().click();
-    await expect(page).toHaveURL(/\/attend$/);
+    await page.getByRole("link", { name: /Notify me about 2028/i }).first().click();
+    await expect(page).toHaveURL(/\/attend#notify$/);
     await expect(page.getByRole("heading", { level: 1 })).toContainText(/An invitation/);
+    await expect(page.getByLabel("Email address")).toBeVisible();
+  });
+
+  test("notify form saves an email to the 2028 list", async ({ page }) => {
+    let sent: unknown = null;
+    await page.route("**/api/submit-form", async (route) => {
+      sent = route.request().postDataJSON();
+      await route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ ok: true }) });
+    });
+    await page.goto("/attend");
+    await page.getByLabel("Email address").fill("test@example.com");
+    await page.getByRole("button", { name: "Notify me" }).click();
+    await expect(page.getByText(/when 2028 applications open/i)).toBeVisible();
+    expect(sent).toMatchObject({ kind: "contact", payload: { email: "test@example.com", message: "Notify me when 2028 applications open." } });
   });
 
   test("legacy /register and /schedule URLs redirect to their successors", async ({ page }) => {

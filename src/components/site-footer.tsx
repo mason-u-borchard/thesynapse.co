@@ -1,3 +1,4 @@
+// _Last updated: 2026-11-16_
 import Link from "next/link";
 import { meta } from "@/lib/content";
 
@@ -74,7 +75,9 @@ export function SiteFooter() {
               a fixed 300px so it wraps after "mind,". The disciplines
               line then sits below as whitespace-nowrap -- it visually
               breaks the column's nominal width but that's intentional
-              in the design. */}
+              in the design. On phones (below sm) it wraps instead: at 390px
+              the unwrapped line ran 22px past the screen and gave every
+              page a sideways scroll. */}
           <div className="w-full max-w-[420px] xl:w-[300px] xl:max-w-none">
             <Link href="/" className="inline-flex items-center" aria-label="The Synapse -- home">
               <img
@@ -86,7 +89,7 @@ export function SiteFooter() {
             <p className="mt-7 font-sans text-xl leading-[1.6] text-off-white">
               Where women connect mind, machine and what comes next
             </p>
-            <p className="mt-7 font-mono text-sm font-light leading-[1.4] text-off-white whitespace-nowrap">
+            <p className="mt-7 font-mono text-sm font-light leading-[1.4] text-off-white sm:whitespace-nowrap">
               AI &middot; Robotics &middot; Cognitive Science &middot; Consciousness
             </p>
           </div>
@@ -109,7 +112,7 @@ export function SiteFooter() {
               title="Get Involved"
               items={[
                 { label: "Fund the room", href: "/invest" },
-                { label: "Apply to attend", href: "/attend" },
+                { label: "Notify me about 2028", href: "/attend#notify" },
               ]}
             />
             <FooterColumn

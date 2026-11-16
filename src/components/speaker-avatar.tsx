@@ -1,17 +1,18 @@
-// _Last updated: 2026-10-31_
+// _Last updated: 2026-11-16_
 //
 // A single speaker avatar: a circular black-and-white headshot, or -- when
-// no photo is set yet -- the Synapse flower in the speaker's field color.
+// no photo is set yet -- the round flower graphic in the speaker's field
+// color (Taylor's Figma "Graphic" component, public/figma/rosette-*.svg).
 // Shared by the program speaker grid and the homepage carousel so both
 // render people the same way. Size is passed in so each surface can scale.
 
 import type { FeaturedSpeaker, SpeakerAccent } from "@/content/featured-speakers";
 
-const accentStyles: Record<SpeakerAccent, { circle: string; flower: string }> = {
-  amethyst: { circle: "bg-amethyst-100", flower: "/figma/graphic-ai.svg" },
-  oxide: { circle: "bg-oxide-100", flower: "/figma/graphic-robotics.svg" },
-  orchid: { circle: "bg-orchid-100", flower: "/figma/graphic-cs.svg" },
-  moss: { circle: "bg-moss-100", flower: "/figma/graphic-consciousness.svg" },
+const rosettes: Record<SpeakerAccent, string> = {
+  amethyst: "/figma/rosette-amethyst.svg",
+  oxide: "/figma/rosette-oxide.svg",
+  orchid: "/figma/rosette-orchid.svg",
+  moss: "/figma/rosette-moss.svg",
 };
 
 export function SpeakerAvatar({
@@ -33,15 +34,12 @@ export function SpeakerAvatar({
     );
   }
 
-  const accent = accentStyles[speaker.accent];
   return (
-    <div className={`flex shrink-0 items-center justify-center rounded-full ${accent.circle} ${className}`}>
-      <img
-        src={accent.flower}
-        alt=""
-        aria-hidden="true"
-        className="h-[62%] w-[62%] object-contain"
-      />
-    </div>
+    <img
+      src={rosettes[speaker.accent]}
+      alt=""
+      aria-hidden="true"
+      className={`shrink-0 rounded-full ${className}`}
+    />
   );
 }

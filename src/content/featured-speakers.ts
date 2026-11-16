@@ -6,8 +6,11 @@
 // grow and change.
 //
 // headshot: path under /public. Leave it off and the card falls back to
-// the Synapse flower in `accent`'s color, so a speaker without a photo
-// still looks intentional. Photos are rendered black-and-white in the UI.
+// the round flower graphic in `accent`'s color, so a speaker without a
+// photo still looks intentional. Photos are rendered black-and-white in
+// the UI. Since 2026-11-16 the photos are Taylor's lighting- and
+// size-matched versions exported from the program Figma (Mason's and
+// Julia's are the ones they supplied).
 //
 // accent picks the flower color for the photo-less fallback and cycles
 // through the four field colors for variety:
@@ -37,6 +40,6 @@ export const featuredSpeakers: FeaturedSpeaker[] = [
   { name: "Polly Washburn", headshot: "/figma/speakers/polly-washburn.jpg", accent: "amethyst" },
   { name: "Rachel Grunspan", headshot: "/figma/speakers/rachel-grunspan.jpg", accent: "oxide" },
   { name: "Rebecca Armstrong", headshot: "/figma/speakers/rebecca-armstrong.jpg", accent: "orchid" },
-  { name: "Sarah Withee", headshot: "/figma/speakers/sarah-withee.png", accent: "moss" },
+  { name: "Sarah Withee", headshot: "/figma/speakers/sarah-withee.jpg", accent: "moss" },
   { name: "Shamini Jain", headshot: "/figma/speakers/shamini-jain.jpg", accent: "amethyst" },
 ];

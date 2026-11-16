@@ -18,7 +18,7 @@ No other shape of masonborchard.com is affected.
 
 ## Prerequisites
 
-- GitHub repo for this project (we have one: `mason-u-borchard/synapse-conference-prototype`)
+- GitHub repo for this project (we have one: `mason-u-borchard/thesynapse.co`)
 - Vercel account (free tier is fine)
 - SSH access to the Vultr VPS (you already use `ssh timothason`)
 - An OpenAI API key (or Anthropic key) to set in Vercel env
@@ -30,7 +30,7 @@ since been rewritten. We need the current local history there instead.
 
 ```bash
 cd /home/borchard/borchard-labs-workspace/synapse-conference-prototype
-git remote add origin git@github.com:mason-u-borchard/synapse-conference-prototype.git
+git remote add origin git@github.com:mason-u-borchard/thesynapse.co.git
 # force-push replaces the old public history with the current clean history:
 git push --force origin main
 ```
@@ -38,7 +38,7 @@ git push --force origin main
 ## Step 2 -- Create Vercel project
 
 1. Sign in at vercel.com (GitHub login is fine)
-2. "Add New" -> "Project" -> import `mason-u-borchard/synapse-conference-prototype`
+2. "Add New" -> "Project" -> import `mason-u-borchard/thesynapse.co`
 3. Accept the default Next.js framework preset
 4. Environment variables -- add these under Production and Preview:
 

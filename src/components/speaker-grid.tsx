@@ -40,12 +40,14 @@ export function SpeakerGrid({
         />
 
         {/* Speaker grid (Figma Frame 103): wrapping cards, each a circular
-            avatar over a centered name. */}
-        <ul className="grid w-full max-w-[1328px] grid-cols-2 gap-x-6 gap-y-12 min-[560px]:grid-cols-3 md:gap-x-14 md:gap-y-20 lg:grid-cols-4">
+            avatar over a centered name. Flex-wrap rather than CSS grid so
+            a short last row centers (17 people in rows of 4 left one alone
+            on the left). Item widths reproduce 2 / 3 / 4 columns. */}
+        <ul className="flex w-full max-w-[1328px] flex-wrap justify-center gap-x-6 gap-y-12 md:gap-x-14 md:gap-y-20">
           {featuredSpeakers.map((speaker) => (
             <li
               key={speaker.name}
-              className="flex flex-col items-center gap-4 md:gap-5"
+              className="flex w-[calc((100%-1.5rem)/2)] flex-col items-center gap-4 min-[560px]:w-[calc((100%-3rem)/3)] md:w-[calc((100%-7rem)/3)] md:gap-5 lg:w-[calc((100%-10.5rem)/4)]"
             >
               <SpeakerAvatar speaker={speaker} />
               <p className="font-sans text-[clamp(1rem,0.5vw+0.875rem,1.375rem)] font-semibold leading-[1.4] text-off-black text-center">
